@@ -1,0 +1,13 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+
+class OrganizationController extends Controller
+{
+    function index(Request $request)
+    {
+    	
+    }
+}
