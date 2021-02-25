@@ -15,25 +15,29 @@
 									<!--begin::Content-->
 									<div class="flex-row-fluid ml-lg-8">
 										<!--begin::Card-->
+										<form method="post">
 										<div class="card card-custom">
 											<!--begin::Header-->
-											<div class="card-header py-3">
-												<div class="card-title align-items-start flex-column">
-													<h3 class="card-label font-weight-bolder text-success">Domain Mapping</h3>
-													<span class="text-muted font-weight-bold font-size-sm mt-1">Choose or add Domain name</span>
-												</div>
-												<div class="card-toolbar">
-													
-													<button type="reset" class="btn btn-success mr-2">Save changes</button>
-													
-													<button type="reset" class="btn btn-secondary">Cancel</button>
+											
+												@csrf
+												
+												<div class="card-header py-3">
+													<div class="card-title align-items-start flex-column">
+														<h3 class="card-label font-weight-bolder text-success">Domain Mapping</h3>
+														<span class="text-muted font-weight-bold font-size-sm mt-1">Choose or add Domain name</span>
+													</div>
+													<div class="card-toolbar">
+														
+														<button type="submit" class="btn btn-success mr-2">Save changes</button>
+														
+														<button type="reset" class="btn btn-secondary">Cancel</button>
 
-													
+														
+													</div>
 												</div>
-											</div>
 											<!--end::Header-->
 											<!--begin::Form-->
-											<form class="form">
+											
 												<!--begin::Body-->
 												<div class="card-body">
 													
@@ -44,7 +48,7 @@
 															<div class="form-group mb-2">
 																<label>Domain Name</label>
 																<div class="input-group">
-																	<input type="text" class="form-control" placeholder="greenedu">
+																	<input type="text" name="domain_name" value="{{Auth::guard('organization')->user()->setting->domain_name??''}}" class="form-control" placeholder="greenedu">
 																	<div class="input-group-append">
 																		<span class="input-group-text">.gopius.com</span>
 																	</div>
@@ -76,23 +80,12 @@
 															
 															
 														</div>
-
-														
-													
-														
-													
-													
-													
-													
-
-													
-													
-													
 												</div>
 												<!--end::Body-->
-											</form>
+											
 											<!--end::Form-->
 										</div>
+										</form>
 										<!--end::Card-->
 									</div>
 									<!--end::Content-->

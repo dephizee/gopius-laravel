@@ -1,5 +1,6 @@
 
 						<!--begin::Bottom-->
+						<!--begin::Bottom-->
 						<div class="header-bottom">
 							<!--begin::Container-->
 							<div class="container">
@@ -37,17 +38,29 @@
 											<div id="kt_header_menu" class="header-menu header-menu-mobile header-menu-layout-default">
 												<!--begin::Nav-->
 												<ul class="menu-nav">
-													<li class="menu-item menu-item-{{$dashboard??'rel'}}" aria-haspopup="true">
-														<a href="{{ route('learner_dashboard') }}" class="menu-link">
-															<span class="menu-text">Dashboard</span>
+													<li class="menu-item menu-item-{{$course??'rel'}}" aria-haspopup="true">
+														<a href="{{ route('learner_courses') }}" class="menu-link">
+															<span class="menu-text">Courses</span>
 														</a>
 													</li>
-												
-													{{-- <li class="menu-item menu-item-{{$customize??'rel'}}" aria-haspopup="true">
-														<a href="{{ route('organization_customize') }}" class="menu-link">
-															<span class="menu-text">Customize</span>
+													<li class="menu-item menu-item-{{$assignment??'rel'}}" aria-haspopup="true">
+														<a href="{{ route('learner_assignments') }}" class="menu-link">
+															<span class="menu-text">Assignments</span>
 														</a>
-													</li> --}}
+													</li>
+													<li class="menu-item menu-item-{{$quiz??'rel'}}" aria-haspopup="true">
+														<a href="{{ route('learner_quizzes') }}" class="menu-link">
+															<span class="menu-text">Quizzes</span>
+														</a>
+													</li>
+													<li class="menu-item menu-item-{{$poll??'rel'}}" aria-haspopup="true">
+														<a href="{{ route('learner_polls') }}" class="menu-link">
+															<span class="menu-text">Polls</span>
+														</a>
+													</li>
+													
+													
+													
 												</ul>
 												<!--end::Nav-->
 											</div>
@@ -63,6 +76,7 @@
 							</div>
 							<!--end::Container-->
 						</div>
+						<!--end::Bottom-->
 						<!--end::Bottom-->
 					</div>
 					<!--end::Header-->

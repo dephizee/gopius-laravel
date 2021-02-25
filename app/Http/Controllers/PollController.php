@@ -9,9 +9,55 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Category;
 use App\Models\Poll;
 use App\Models\PollOption;
+use App\Models\LearnerPollOption;
+use App\Models\Post;
+use App\Models\PostInstructor;
+use App\Models\PollPost;
 
 class PollController extends Controller
 {
+
+    function learnerClassPoll(Request $request, Category $class, Poll $poll)
+    {
+       
+
+        $data['header'] = 'class';
+        $data['view'] = 'view-poll';
+        $data['class'] = $class;
+        $data['class_title'] = $class->cat_title;
+        // $data['instructors'] = ClassInstructor::where("cat_no", Auth::guard('instructor')->user()->instr_id)->get();
+        $data['poll'] = $poll;
+        return view('learner.dashboard',  $data );
+    } 
+    function learnerSubmitClassPoll(Request $request, Category $class, Poll $poll)
+    {
+        
+        $validated = $request->validate([
+            'option' => 'required|exists:poll_options,poll_option_id',
+        ]);
+        // dd($request->input());
+        
+        $validated['learner_no'] =  Auth::guard('learner')->user()->learner_id;
+        $validated['poll_option_no'] =  $validated['option'];
+        unset($validated['option']);
+        
+        $assignment_learner = LearnerPollOption::firstOrNew($validated);
+        $assignment_learner->save();
+    
+        
+        return redirect()->route('learner_class', [$class->cat_id,]);
+    }
+
+
+
+
+
+
+
+
+
+
+
     function viewPoll(Category $class, Poll $poll)
     {
         $data['dashboard'] = 'add_course';
@@ -19,6 +65,11 @@ class PollController extends Controller
         $data['class_title'] = $class->cat_title;
         $data['view'] = 'view_poll';
         $data['poll'] = $poll;
+        $data['poll']['total_votes'] = 0;
+        foreach ($data['poll']->options as $key => $option) {
+            $option['votes'] = count($option->learnerPollOption);
+            $data['poll']['total_votes'] += $option['votes'];
+        }
         // $data['categories']  = Category::cursor();
         return view('instructor.dashboard',  $data );
     }
@@ -53,6 +104,19 @@ class PollController extends Controller
                                     'poll_no'=>$poll->poll_id,
                                     ]);
         }
+        $post = Post::create([
+            'content'=>'<b>New Poll Alert</b>',
+            'cat_no'=>$class->cat_id,
+            'type'=>'2',
+        ]);
+        $post_instructor = PostInstructor::create([
+            'instr_no'=>Auth::guard('instructor')->user()->instr_id,
+            'post_no'=>$post->id,
+        ]);
+        $poll_post = PollPost::create([
+            'poll_no'=>$poll->poll_id,
+            'post_no'=>$post->id,
+        ]);
         return redirect()->route('instructor_class', [$class->cat_id,]);
     }
 

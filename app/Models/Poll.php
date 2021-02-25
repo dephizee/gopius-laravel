@@ -17,6 +17,10 @@ class Poll extends Model
     	'instr_no',
     ];
 
+    protected $casts = [
+        'end_date' => 'datetime',
+    ];
+
     /**
      * Poll belongs to Instructor.
      *
@@ -26,6 +30,16 @@ class Poll extends Model
     {
     	// belongsTo(RelatedModel, foreignKey = instructor_id, keyOnRelatedModel = id)
     	return $this->belongsTo(Instructor::class, 'instr_no', 'instr_id');
+    }
+    /**
+     * Poll belongs to Category.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function category()
+    {
+        // belongsTo(RelatedModel, foreignKey = category_id, keyOnRelatedModel = id)
+        return $this->belongsTo(Category::class, 'cat_no', 'cat_id');
     }
 
     /**

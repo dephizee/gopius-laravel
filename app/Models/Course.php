@@ -21,7 +21,8 @@ class Course extends Model
     	'course_status',
     	'course_cover_img_url',
     	
-    	'cat_no',
+        'cat_no',
+    	'instr_no',
     	
     ];
 
@@ -36,4 +37,27 @@ class Course extends Model
         // belongsTo(RelatedModel, foreignKey = category_id, keyOnRelatedModel = id)
         return $this->belongsTo(Category::class, 'cat_no', 'cat_id');
     }
+
+    /**
+     * Course has many Chapters.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function chapters()
+    {
+        // hasMany(RelatedModel, foreignKeyOnRelatedModel = course_id, localKey = id)
+        return $this->hasMany(Chapter::class, 'course_no', 'course_id');
+    }
+
+    /**
+     * Course belongs to Instructor.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function instructor()
+    {
+        // belongsTo(RelatedModel, foreignKey = instructor_id, keyOnRelatedModel = id)
+        return $this->belongsTo(Instructor::class, 'instr_no', 'instr_id');
+    }
+   
 }

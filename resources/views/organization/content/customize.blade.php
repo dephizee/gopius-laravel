@@ -15,6 +15,7 @@
 									<!--begin::Content-->
 									<div class="flex-row-fluid ml-lg-8">
 										<!--begin::Card-->
+										<form class="form" method="post">
 										<div class="card card-custom">
 											<!--begin::Header-->
 											<div class="card-header py-3">
@@ -24,7 +25,7 @@
 												</div>
 												<div class="card-toolbar">
 													
-													<button type="reset" class="btn btn-success mr-2">Save changes</button>
+													<button type="submit" class="btn btn-success mr-2">Save changes</button>
 													
 													<button type="reset" class="btn btn-secondary">Save as Theme</button>
 
@@ -33,7 +34,9 @@
 											</div>
 											<!--end::Header-->
 											<!--begin::Form-->
-											<form class="form">
+											
+												@csrf
+												
 												<!--begin::Body-->
 												<div class="card-body">
 													
@@ -43,32 +46,25 @@
 															<!--begin::Form Group-->
 															<div class="form-group">
 															   <label>Theme</label>
-															   <select class="form-control form-control-solid">
-																   	<option>GoPius Green (Active)</option>
-																   	<option>GoPius Dark</option>
+															   <select name="theme" class="form-control form-control-solid">
+																   	<option value="0">GoPius Green (Active)</option>
+																   	<option value="1">GoPius Dark</option>
 															   </select>
 															</div>
 															
 															<div class="form-group">
 															   <label>Item Color/Background:</label>
-															    <input id="textColor" type="color" value="" class="form-control" />
+															    <input id="textColor" name="color" type="color" value="{{Auth::guard('organization')->user()->setting->color??''}}" class="form-control" />
             													<span class="form-text text-muted">Please choose a color</span>
 															</div>
 															<div class="form-group">
 															   <label>Custom CSS:</label>
-															   <textarea type="text" rows="10" class="form-control form-control-solid">body {
-																 color: #dedede;
-																}</textarea>
+															   <textarea type="text" name="css" rows="10" class="form-control form-control-solid">{{Auth::guard('organization')->user()->setting->css??''}}</textarea>
 															   
 															</div>
 															<div class="form-group">
 															   <label>Custom JS:</label>
-															   <textarea type="text" rows="10" class="form-control form-control-solid">function hello() {
-
-																	  console.log("Hello world!");
-
-																	}
-																	hello();</textarea>
+															   <textarea name="js" type="text" rows="10" class="form-control form-control-solid">{{Auth::guard('organization')->user()->setting->js??''}}</textarea>
 															   
 															</div>
 															
@@ -78,20 +74,12 @@
 															
 														</div>
 													
-														
-													
-													
-													
-													
-
-													
-													
-													
 												</div>
 												<!--end::Body-->
-											</form>
+											
 											<!--end::Form-->
 										</div>
+										</form>
 										<!--end::Card-->
 									</div>
 									<!--end::Content-->

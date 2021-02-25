@@ -656,5 +656,34 @@
 							<!--end::Container-->
 						</div>
 						<!--end::Top-->
-						
-					
+						@if (session()->has('message'))
+							<script type="text/javascript">
+								window.addEventListener('load', (e)=>{
+									toastr.success("{{session()->get('message')}}");
+								});
+								
+							</script>
+						@endif
+						@if ($errors->any())
+						    
+						            @foreach ($errors->all() as $error)
+						            	<script type="text/javascript">
+											window.addEventListener('load', (e)=>{
+												swal.fire({
+								                text: "{{ $error }}",
+								                icon: "error",
+								                buttonsStyling: false,
+								                confirmButtonText: "Ok, got it!",
+						                        customClass: {
+						    						confirmButton: "btn font-weight-bold btn-light-primary"
+							    					}
+									            }).then(function() {
+													// KTUtil.scrollTop();
+												});
+											})
+											
+										</script>
+						                
+						            @endforeach
+						       
+						@endif

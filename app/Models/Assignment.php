@@ -22,4 +22,21 @@ class Assignment extends Model
     protected $casts = [
         'end_date' => 'datetime',
     ];
+
+    public function course()
+    {
+        // belongsTo(RelatedModel, foreignKey = course_id, keyOnRelatedModel = id)
+        return $this->belongsTo(Course::class, 'course_no', 'course_id');
+    }
+
+    /**
+     * Assignment belongs to Instructor.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function instructor()
+    {
+        // belongsTo(RelatedModel, foreignKey = instructor_id, keyOnRelatedModel = id)
+        return $this->belongsTo(Instructor::class, 'instr_no', 'instr_id');
+    }
 }

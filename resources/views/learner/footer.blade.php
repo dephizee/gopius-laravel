@@ -35,26 +35,49 @@
 		<script src="/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
 		<!--end::Page Vendors-->
 		@switch($view)
-		    @case('instructorss--')
-		        <!--begin::Page Scripts(used by this page)-->
-				<script src="/assets/js/pages/instructor-learner.js"></script>
-				<!--end::Page Scripts-->
-		        @break
+		    
 
 		    @case('learners')
 		        <!--begin::Page Scripts(used by this page)-->
-				<script src="/assets/js/pages/instructor-learner.js"></script>
+				<script src="/assets/js/instructor/learners.js"></script>
 				<!--end::Page Scripts-->
 		        @break
- 			@case('courses')
+			@case('classes')
 		        <!--begin::Page Scripts(used by this page)-->
-				<script src="/assets/js/pages/instructor-courses.js"></script>
+				<script src="/assets/js/learner/classes.js"></script>
+				
+				
 				<!--end::Page Scripts-->
 		        @break
 
-		    @case('classes')
+		    @case('courses')
 		        <!--begin::Page Scripts(used by this page)-->
-				<script src="/assets/js/pages/instructor-classes.js"></script>
+				<script src="/assets/js/instructor/activities.js"></script>
+				<!--end::Page Scripts-->
+		        @break
+		    @case('polls')
+		        <!--begin::Page Scripts(used by this page)-->
+				<script src="/assets/js/instructor/polls.js"></script>
+				<!--end::Page Scripts-->
+		        @break
+		    @case('view-quiz')
+				
+				<!--begin::Page Custom Styles(used by this page)-->
+				<script src="/assets/js/learner/app.js"></script>
+				<script type="text/javascript">
+					// var quiz = ;
+					var mQuiz = new QuizApp(  @json($quiz->questions), '.previous-btn','.next-btn', @json($quiz->duration));
+				</script>
+				<!--end::Page Custom Styles-->
+				@break
+		    @case('assignments')
+		        <!--begin::Page Scripts(used by this page)-->
+				<script src="/assets/js/instructor/assignments.js"></script>
+				<!--end::Page Scripts-->
+		        @break
+		    @case('quizzes')
+		        <!--begin::Page Scripts(used by this page)-->
+				<script src="/assets/js/instructor/quizzes.js"></script>
 				<!--end::Page Scripts-->
 		        @break
 
@@ -64,7 +87,43 @@
 				<!--end::Page Scripts-->
 		        @break
 
-		    @case('add_course')
+		    @case('class-dashboard')
+		        <!--begin::Page Scripts(used by this page)-->
+		        <style type="text/css">
+					  
+
+					.time-slot{
+					  border: 1px solid #0054f9;
+					}
+					#calendar-wrapper header{
+					    text-align: center;;
+					}
+					.month-changer {
+					  position: absolute; left: 0; 
+					}
+					.month-changer i{
+					  cursor: pointer;
+					}
+					#calendar {
+					    display: block;
+					}
+					#calendar #navigation-wrapper {
+					  display: none;
+					}
+					</style>
+		        <script src="/assets/js/CalendarPicker.js"></script>
+				<script src="/assets/js/learner/class-dashboard.js"></script>
+
+		        @break
+
+		    @case('dashboard')
+		        <!--begin::Page Scripts(used by this page)-->
+				<script src="/assets/js/learner/dashboard.js"></script>
+
+		        @break
+
+		  
+		  	@case('add_course')
 		        <!--begin::Page Scripts(used by this page)-->
 				<script src="/assets/js/pages/custom/wizard/wizard-1.js"></script>
 				<!--end::Page Scripts-->
@@ -73,27 +132,44 @@
 
 		        @break
 
-		    @case('add_instructor')
-		    	<script type="text/javascript">
-		    		$('#kt_select2_3').select2({
-					   placeholder: "Select atleast a class",
-					});
-		    	</script>
-		    	<script src="/assets/js/pages/custom/login/add-instructor.js"></script>
-		    	@break
-		    @case('add_learner')
-		    	<script type="text/javascript">
-		    		$('#kt_select2_3').select2({
-					   placeholder: "Select atleast a class",
-					});
-		    	</script>
-		    	<script src="/assets/js/pages/custom/login/add-learner.js"></script>
-		    	@break
-		    @case('add_class')
-				<script src="/assets/js/pages/custom/login/add-class.js"></script>
-			
+		    @case('add_poll')
+		        
+				<script src="/assets/js/add_poll.js"></script>
 
 		        @break
+
+		    @case('add_assignment')
+		        
+			
+				<script type="text/javascript">
+					var quill = null;
+					var appendAssignments = ()=>{
+						
+						document.querySelector("input[name=ass_content]").value = quill.root.innerHTML;
+						return true;
+					}
+					 
+					
+
+				jQuery(document).ready(function() {
+				   quill = new Quill('#kt_quil_1', {
+				            modules: {
+				                toolbar: [
+				                    [{
+				                        header: [1, 2, false]
+				                    }],
+				                    ['bold', 'italic', 'underline'],
+				                    ['image', 'code-block']
+				                ]
+				            },
+				            placeholder: 'Type your text here...',
+				            theme: 'snow' // or 'bubble'
+				        });
+				});
+				</script>
+
+		        @break
+			
 			
 			@case('build_course')
 		        <!--begin::Page Scripts(used by this page)-->
@@ -104,6 +180,21 @@
 				
 				<!--end::Page Scripts-->
 				<script src="/assets/js/build_course.js"></script>
+
+		        @break
+		    @case('view-assignment')
+		    	<script src="/assets/js/learner/view-assignment.js"></script>
+		        
+
+		        @break
+
+		    @case('learn-course')
+		        <!--begin::Page Scripts(used by this page)-->
+				<!--begin::Page Vendors(used by this page)-->
+				<script src="/assets/js/learner/learn_course.js"></script>
+				<script type="text/javascript">
+					
+				</script>
 
 		        @break
 		

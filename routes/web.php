@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
 
 use App\Http\Controllers\LoginOrganization;
 use App\Http\Controllers\LoginInstructor;
@@ -16,6 +17,9 @@ use App\Http\Controllers\PollController;
 use App\Http\Controllers\AssignmentController;
 use App\Http\Controllers\QuizController;
 use App\Http\Controllers\LoginLearnerController;
+
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -38,6 +42,12 @@ Route::group(['domain'=>'admin.'.$domain,], function(){
 	Route::post('/', [Admin::class, 'processLogin'])->name('admin_login');
 });
 // dd($domain);
+Route::group(['domain'=>'mail.'.$domain,], function(){
+	Route::get('/{learner}', function (App\Models\Learner $learner) {
+		// Mail::to('hafiz227@gmail.com' )->send(new RegistrationSuccessful($organization));	
+        return new App\Mail\SendLearnerLogin($learner);
+    });
+});
 Route::group(['domain'=>'{account}.'.$domain,], function(){
 	Route::get('/', function ($account) {
         print($account);
@@ -53,6 +63,7 @@ Route::group(['middleware'=>['auth_organization_is_logged_in']], function(){
 	Route::post('/', [LoginOrganization::class, 'processLogin'])->name('login_process');
 	Route::get('/register', [LoginOrganization::class, 'registerView'])->name('register');
 	Route::post('/register', [LoginOrganization::class, 'registerProcess'])->name('register');
+	Route::get('/register/verify/{token}', [LoginOrganization::class, 'registerVerifyToken'])->name('verify_org_token');
 	
 });
 Route::group(['prefix'=>'organization',], function(){
@@ -62,8 +73,11 @@ Route::group(['prefix'=>'organization',], function(){
 
 
 		Route::get('/appearance', [Organization::class, 'appearance'])->name('organization_appearance');
+		Route::post('/appearance', [Organization::class, 'updateappearance']);
 		Route::get('/customize', [Organization::class, 'customize'])->name('organization_customize');
+		Route::post('/customize', [Organization::class, 'updateCustomize']);
 		Route::get('/domain-mapping', [Organization::class, 'domainMapping'])->name('domainMapping');
+		Route::post('/domain-mapping', [Organization::class, 'updateDomain']);
 
 
 		Route::get('/classes', [CategoryController::class, 'classes'])->name('organization_classes');
@@ -116,8 +130,13 @@ Route::group(['prefix'=>'instructor'], function (){
 		Route::post('/profile', [InstructorController::class, 'updateInstructorProile']);
 
 		
-		Route::group(['prefix'=>'instructor-class/{class}', 'middleware'=>'instructor_class_access'], function (){
+		Route::group(['prefix'=>'class/{class}', 'middleware'=>'instructor_class_access'], function (){
 			Route::get('/', [InstructorController::class, 'instructorClass'])->name('instructor_class');
+			Route::post('/upload_post', [InstructorController::class, 'instructorUploadClassPost'])->name('instructor_class_upload_post');
+			Route::post('/upload_post_comment', [InstructorController::class, 'instructorUploadClassPostComment'])->name('instructor_class_upload_post_comment');
+			Route::post('/upload_post_like', [InstructorController::class, 'instructorUploadClassPostLike'])->name('instructor_class_upload_post_like');
+
+
 			Route::get('/courses-add', [CourseController::class, 'newCourse'])->name('instructor_course_new');
 			Route::post('/courses-add', [CourseController::class, 'processNewCourse']);
 			Route::get('/courses-build/{course_id}', [CourseController::class, 'buildCourse'])->name('instructor_course_build');
@@ -139,13 +158,23 @@ Route::group(['prefix'=>'instructor'], function (){
 
 			Route::get('/assignment-add', [AssignmentController::class, 'newAssignment'])->name('instructor_assignment_new');
 			Route::post('/assignment-add', [AssignmentController::class, 'processNewAssignment']);
-			Route::get('/assignment/{poll}', [AssignmentController::class, 'viewAssignment'])->name('instructor_assignment_view');
+			Route::get('/assignment/{assignment}', [AssignmentController::class, 'viewAllAssignmentSubmissions'])->name('instructor_assignment_submissions');
+
+			Route::get('/assignment/{assignment}/submissions', [AssignmentController::class, 'getAllSubmittedAssignments']);
+			Route::get('/assignment/{assignment}/view/{assignment_learner}', [AssignmentController::class, 'viewSubmission'])->name('instructor_view_assignment_submission');
+			Route::get('/assignment/{assignment}/view/{assignment_learner}/status/{status?}', [AssignmentController::class, 'submissionStatus'])->name('instructor_submission_status');
+			
 
 
 			Route::get('/quiz-add', [QuizController::class, 'newQuiz'])->name('instructor_quiz_new');
 			Route::post('/quiz-add', [QuizController::class, 'processNewQuiz']);
 			Route::get('/quiz-build/{quiz}', [QuizController::class, 'buildQuiz'])->name('instructor_quiz_build');
 			Route::post('/quiz-build/{quiz}/upload', [QuizController::class, 'processBuiltQuiz']);
+
+			Route::get('/quiz/{quiz}', [QuizController::class, 'viewAllQuizSubmissions'])->name('instructor_quiz_submissions');
+			Route::get('/quiz/{quiz}/submissions', [QuizController::class, 'getAllSubmittedQuizzes']);
+			Route::get('/quiz/{quiz}/view/{learner}', [QuizController::class, 'viewSubmission'])->name('instructor_view_quiz_submission');
+			Route::get('/quiz/{quiz}/update/{learner_quiz_option}/status/{status?}', [QuizController::class, 'submissionStatus'])->name('instructor_update_submission_status');
 
 		});
 
@@ -157,6 +186,8 @@ Route::group(['prefix'=>'instructor'], function (){
 
 		Route::get('/activities', [InstructorController::class, 'instructorActivities'])->name('instructor_activities');
 		Route::get('/courses-all', [CourseController::class, 'allCourse'])->name('instructor_course_newI');
+		Route::post('/activities/update/{course}', [CourseController::class, 'updateCourse']);
+		Route::get('/activities/delete/{course}', [CourseController::class, 'deleteCourse']);
 
 		Route::get('/assignments', [AssignmentController::class, 'instructorAssignments'])->name('instructor_assignments');
 		Route::get('/assignments-all', [AssignmentController::class, 'allAssignments']);
@@ -182,10 +213,63 @@ Route::group(['prefix'=>'learner'], function (){
 		Route::post('/', [LoginLearnerController::class, 'processLogin']);
 	});
 	Route::group(['middleware'=>'auth_learner'], function (){
+		Route::group(['prefix'=>'class/{class}', 'middleware'=>'learner_class_access'], function (){
+			Route::get('/', [LearnerController::class, 'learnerClass'])->name('learner_class');
+			Route::post('/upload_post', [LearnerController::class, 'learnerUploadClassPost'])->name('learner_class_upload_post');
+			Route::post('/upload_post_comment', [LearnerController::class, 'learnerUploadClassPostComment'])->name('learner_class_upload_post_comment');
+			Route::post('/upload_post_like', [LearnerController::class, 'learnerUploadClassPostLike'])->name('learner_class_upload_post_like');
+
+			Route::group(['middleware'=>'course_learner_access'], function (){
+				Route::get('/course/{course}', [CourseController::class, 'learnerClassCourse'])->name('learner_class_course');
+				Route::get('/course/{course}/learn', [CourseController::class, 'learnerClassCourseLearn'])->name('learner_class_course_learn');
+				Route::get('/course/{course}/learn/ticked/{block}', [CourseController::class, 'learnerClassCourseLearnTicked']);
+			});
+			
+
+			Route::group(['middleware'=>'assignment_learner_access'], function (){
+				Route::get('/assignment/{assignment}', [AssignmentController::class, 'learnerClassAssignment'])->name('learner_class_assignment');
+				Route::post('/assignment/{assignment}', [AssignmentController::class, 'learnerSubmitClassAssignment']);
+			});
+			
+
+			Route::group(['middleware'=>'poll_learner_access'], function (){
+				Route::get('/poll/{poll}', [PollController::class, 'learnerClassPoll'])->name('learner_class_poll');
+				Route::post('/poll/{poll}', [PollController::class, 'learnerSubmitClassPoll']);
+			});
+
+			Route::group(['middleware'=>'quiz_learner_access'], function (){
+				Route::get('/quiz/{quiz}', [QuizController::class, 'learnerClassQuiz'])->name('learner_class_quiz');
+				Route::post('/quiz/{quiz}', [QuizController::class, 'learnerSubmitClassQuiz']);
+			});
+			
+
+			
+		});
+		
+
+
+
 		Route::get('/timeline', [LearnerController::class, 'learnerDashboard'])->name('learner_dashboard');
+		Route::get('/profile', [LearnerController::class, 'learnerProfile'])->name('learner_profile');
+		Route::post('/profile', [LearnerController::class, 'updateLearnerProile']);
+		
+
 		Route::get('/classes', [LearnerController::class, 'learnerClasses'])->name('learner_classes');
-		Route::get('/activities', [LearnerController::class, 'learnerActivities'])->name('learner_activities');
+		Route::get('/classes-all', [LearnerController::class, 'allLearnerClasses']);
+
+		Route::get('/activities', [LearnerController::class, 'learnerCourses'])->name('learner_courses');
+
+		Route::get('/assignments', [LearnerController::class, 'learnerAssignments'])->name('learner_assignments');
+
+		Route::get('/quizzes', [LearnerController::class, 'learnerQuizzes'])->name('learner_quizzes');
+
+		Route::get('/polls', [LearnerController::class, 'learnerPolls'])->name('learner_polls');
+
+
+
+		Route::get('/logout', [LearnerController::class, 'logout'])->name('learner_logout');
 	});
+
 });
 
 

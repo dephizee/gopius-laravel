@@ -10,6 +10,10 @@ use App\Models\Category;
 use App\Models\Course;
 use App\Models\Requirement;
 use App\Models\Outcome;
+use App\Models\Setting;
+use App\Models\Learner;
+use App\Models\Instructor;
+use App\Models\Quiz;
 
 class Organization extends Controller
 {
@@ -18,6 +22,8 @@ class Organization extends Controller
     	$data['dashboard'] = 'active';
     	$data['header'] = 'home';
     	$data['view'] = 'dashboard';
+        $data['learners']  = Learner::where("org_no", Auth::guard('organization')->user()->org_id)->orderBy('learner_id', 'desc')->get();
+        $data['instructors']  = Instructor::where("org_no", Auth::guard('organization')->user()->org_id)->orderBy('instr_id', 'desc')->get();
     	return view('organization.dashboard',  $data );
     }
     
@@ -26,6 +32,17 @@ class Organization extends Controller
     	$data['header'] = 'home';
     	$data['view'] = 'timeline';
     	$data['timeline'] = 'active';
+        $data['learners']  = Learner::where("org_no", Auth::guard('organization')->user()->org_id)->orderBy('learner_id', 'desc')->get();
+        $data['instructors']  = Instructor::where("org_no", Auth::guard('organization')->user()->org_id)->orderBy('instr_id', 'desc')->get();
+        $data['classes']  = Category::where("org_no", Auth::guard('organization')->user()->org_id)->orderBy('cat_id', 'desc')->get();
+        $data['quizzes']  = Quiz::
+                        leftJoin('courses', 'quizzes.course_no', '=', 'courses.course_id')
+                        ->leftJoin('categories', 'courses.cat_no', '=', 'categories.cat_id')
+                        ->where('categories.org_no', Auth::guard('organization')->user()->org_id)->get();
+        $data['courses']  = Course::leftJoin('categories', 'courses.cat_no', '=', 'categories.cat_id')
+                        ->where('categories.org_no', Auth::guard('organization')->user()->org_id)->get();
+        
+        // dd($data['quizzes'][0]);
     	return view('organization.dashboard',  $data );
     }
 
@@ -39,12 +56,54 @@ class Organization extends Controller
     	return view('organization.dashboard',  $data );
     }
 
+    function updateAppearance(Request $request)
+    {
+        // dd($request->input());
+        $organization = Auth::guard('organization')->user();
+        $organization->about_org = $request->input('about_org');
+        $organization->org_phone = $request->input('org_phone');
+        $organization->homepage = $request->input('homepage');
+        $organization->website = $request->input('website');
+        $organization->fb = $request->input('fb');
+        $organization->twitter = $request->input('twitter');
+        $organization->linkedin = $request->input('linkedin');
+        $organization->save();
+        
+        
+        
+        return redirect()->route('organization_appearance');
+    }
+
     function customize(Request $request)
     {
-    	$data['view'] = 'customize';
-    	$data['header'] = 'appearance';
-    	$data['customize'] = 'active';
-    	return view('organization.dashboard',  $data );
+        $data['view'] = 'customize';
+        $data['header'] = 'appearance';
+        $data['customize'] = 'active';
+        return view('organization.dashboard',  $data );
+    }
+    function updateCustomize(Request $request)
+    {
+        $setting = Setting::where('org_no', Auth::guard('organization')->user()->org_id)->first();
+        if ($setting == null) {
+            $setting = Setting::create([
+                'color'=>$request->input('color'),
+                'theme'=>$request->input('theme'),
+                'css'=>$request->input('css'),
+                'js'=>$request->input('js'),
+                'org_no'=>Auth::guard('organization')->user()->org_id,
+                
+            ]);
+        }else{
+            $setting->color = $request->input('color');
+            $setting->theme = $request->input('theme');
+            $setting->css = $request->input('css');
+            $setting->js = $request->input('js');
+            $setting->save();
+        }
+        
+        
+        
+        return redirect()->route('organization_customize');
     }
 
     function domainMapping(Request $request)
@@ -53,6 +112,28 @@ class Organization extends Controller
     	$data['header'] = 'appearance';
     	$data['domainMapping'] = 'active';
     	return view('organization.dashboard',  $data );
+    }
+    function updateDomain(Request $request)
+    {
+        $setting = Setting::where('org_no', Auth::guard('organization')->user()->org_id)->first();
+        if ($setting == null) {
+            $setting = Setting::create([
+                'domain_name'=>$request->input('domain_name'),
+                
+                'org_no'=>Auth::guard('organization')->user()->org_id,
+                
+            ]);
+        }else{
+            $setting->domain_name = $request->input('domain_name');
+            $setting->save();
+        }
+        
+        
+        
+        
+        
+        
+        return redirect()->route('domainMapping');
     }
 
     

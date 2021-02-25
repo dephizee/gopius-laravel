@@ -70,7 +70,7 @@
 													</div>
 													<div class="col-sm-6 float-left pl-15">
 														<div class="form-group">
-														   	<label>Choose Class or Category:</label>
+														   	<label>Choose Course:</label>
 														   	<select required type="text" class="form-control form-control-solid" name="course_no">
 														   		<option disabled="">--select a class --</option>
 														   		@foreach ($courses as $course)

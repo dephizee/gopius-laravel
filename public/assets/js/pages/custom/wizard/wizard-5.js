@@ -204,6 +204,13 @@ var KTWizard5 = function () {
 							}
 						}
 					},
+					org_size: {
+						validators: {
+							notEmpty: {
+								message: 'Organisation Size is required'
+							}
+						}
+					},
 					org_address: {
 						validators: {
 							notEmpty: {
@@ -257,6 +264,28 @@ var KTWizard5 = function () {
 		_validations.push(FormValidation.formValidation(
 			_formEl,
 			{
+				fields: {
+					org_priority: {
+						validators: {
+							notEmpty: {
+								message: 'Organisation Priority is required'
+							}
+						}
+					},
+					
+					
+				},
+				fields: {
+					org_why: {
+						validators: {
+							notEmpty: {
+								message: 'Organisation Reason is required'
+							}
+						}
+					},
+					
+					
+				},
 				fields: {
 					about_org: {
 						validators: {

@@ -190,6 +190,22 @@
 													</select>
 												</div>
 												<!--end::Form Group-->
+												<!--end::Form Group-->
+												<div class="form-group">
+													<label class="font-size-h6 font-weight-bolder text-dark">Organization Size</label>
+													<select name="org_size" class="form-control h-auto p-5 border-0 rounded-lg font-size-h6">
+														<option value="">Select</option>
+														<option value="1-50">1 - 50</option>
+														<option value="51-100">51 - 100</option>
+														<option value="101-500">101 - 500</option>
+														<option value="501-1000">501 - 1,000</option>
+														<option value="1001-5000">1,001 - 5,000</option>
+														<option value="5000+">5,000+</option>
+														
+														
+													</select>
+												</div>
+												<!--end::Form Group-->
 												<!--begin::Form Group-->
 												<div class="form-group">
 													<label class="font-size-h6 font-weight-bolder text-dark">Address</label>
@@ -237,6 +253,38 @@
 													
 												</div>
 												<!--end::Title-->
+												<!--end::Form Group-->
+												<div class="form-group">
+													<label class="font-size-h6 font-weight-bolder text-dark">What is your highest priority with Gopius?</label>
+													<select required name="org_priority" class="form-control h-auto p-5 border-0 rounded-lg font-size-h6">
+														<option value="">Select</option>
+														<option value="Training Employees">Training Employees</option>
+														<option value="Training Customers">Training Customers</option>
+														<option value="Teaching Students">Teaching Students</option>
+														<option value="Training Partners">Training Partners</option>
+														<option value="others">others</option>
+														
+														
+														
+													</select>
+												</div>
+												<!--end::Form Group-->
+												<!--end::Form Group-->
+												<div class="form-group">
+													<label class="font-size-h6 font-weight-bolder text-dark">Why do you want to use Gopius?</label>
+													<select required name="org_why" class="form-control h-auto p-5 border-0 rounded-lg font-size-h6">
+														<option value="">Select</option>
+														<option value="I want to start using a LMS">I want to start using a LMS</option>
+														<option value="I want to change my LMS">I want to change my LMS</option>
+														<option value="I want to transfer my courses online">I want to transfer my courses online</option>
+														<option value="Inquiring for client">Inquiring for client</option>
+														<option value="I want to partner with GoPius">I want to partner with GoPius</option>
+														<option value="others">Others</option>
+														
+														
+													</select>
+												</div>
+												<!--end::Form Group-->
 												<!--begin::Form Group-->
 												<div class="form-group">
 													<label class="font-size-h6 font-weight-bolder text-dark">Tell us about your Organization</label>

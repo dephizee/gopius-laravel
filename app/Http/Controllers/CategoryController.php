@@ -50,6 +50,6 @@ class CategoryController extends Controller
         $course = Category::create($validated);
         
         
-        return redirect()->route('organization_classes');
+        return redirect()->route('organization_classes')->with('message', 'Class Created Successfully');
     }
 }

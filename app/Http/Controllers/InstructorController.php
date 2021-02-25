@@ -6,16 +6,26 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 
 use App\Models\Category;
 use App\Models\Instructor;
 use App\Models\ClassInstructor;
+use App\Models\ClassLearner;
 use App\Models\Course;
 use App\Models\Poll;
 use App\Models\Assignment;
 use App\Models\Quiz;
+use App\Models\Post;
+use App\Models\PostInstructor;
+use App\Models\PostAttachment;
+use App\Models\CommentPost;
+use App\Models\PostLike;
 
 use Illuminate\Support\Str;
+
+
+use App\Mail\SendInstructorLogin;
 
 
 
@@ -63,7 +73,8 @@ class InstructorController extends Controller
                                     'instr_no'=>$instructor->instr_id,
                                     ]);
         }
-        return redirect()->route('organization_instuctors');
+        Mail::to($instructor->instr_email)->send(new SendInstructorLogin($instructor));
+        return redirect()->route('organization_instuctors')->with('message', 'InstructorCreated Successfully, Instructor will recieve login details.');
     }
 
 
@@ -85,7 +96,21 @@ class InstructorController extends Controller
                     ->leftJoin('classes_instructors', 'categories.cat_id', '=', 'classes_instructors.cat_no')
                     ->where('classes_instructors.instr_no', Auth::guard('instructor')->user()->instr_id)->get();
         $data['quizzes']  = Quiz::where('instr_no', Auth::guard('instructor')->user()->instr_id)->get();
-        // dd($data['quizzes'][0]);
+        $data['learners']  = ClassLearner::
+                    leftJoin('learners', 'classes_learners.learner_no', 'learners.learner_id')
+                    // ->leftJoin('categories', 'classes_learners.cat_no', 'categories.cat_id')
+                    ->whereIn("classes_learners.cat_no", function ($query){
+                        $query->select('cat_no')
+                        ->from(with(new ClassInstructor)->getTable())
+                        ->where('instr_no', Auth::guard('instructor')->user()->instr_id);
+                    } )->get();
+        $data['posts'] = Post::whereIn("posts.cat_no", function ($query){
+                            $query->select('cat_no')
+                            ->from(with(new ClassInstructor)->getTable())
+                            ->where('instr_no', Auth::guard('instructor')->user()->instr_id);
+                        } )
+                        ->orderBy('posts.id', 'desc')
+                        ->simplePaginate(15);
         return view('instructor.dashboard',  $data );
     }
     function instructorProile(Request $request)
@@ -138,9 +163,14 @@ class InstructorController extends Controller
         $data['view'] = 'class-dashboard';
         $data['class'] = $class;
         $data['class_title'] = $class->cat_title;
-        $data['instructors'] = ClassInstructor::where("cat_no", Auth::guard('instructor')->user()->instr_id)->get();
+        
+        $data['instructors'] = ClassInstructor::where("cat_no", $class->cat_id)->get();
+        // dd($data['instructors']);
         $data['courses'] = Course::where("cat_no", $class->cat_id)->get();
         $data['polls'] = Poll::where("cat_no", $class->cat_id)->get();
+        $data['posts'] = Post::where("cat_no", $class->cat_id)->orderBy('posts.id', 'desc')->simplePaginate(15);
+
+        // dd($data['posts']);
         $data['assignments'] = Assignment::leftJoin('courses', 'assignments.course_no', '=', 'courses.course_id')
                                 ->leftJoin('instructors', 'assignments.instr_no', '=', 'instructors.instr_id')
 
@@ -149,10 +179,17 @@ class InstructorController extends Controller
                                 ->leftJoin('instructors', 'quizzes.instr_no', '=', 'instructors.instr_id')
 
                                 ->where("courses.cat_no", $class->cat_id)->get();
-
-        foreach ($data['instructors'] as $key => $instructor) {
-           $instructor->instructor;
-        }
+        $data['learners']  = ClassLearner::
+                                leftJoin('learners', 'classes_learners.learner_no', 'learners.learner_id')
+                                ->whereIn("classes_learners.cat_no", function ($query){
+                                    $query->select('cat_no')
+                                    ->from(with(new ClassInstructor)->getTable())
+                                    ->where('instr_no', Auth::guard('instructor')->user()->instr_id)
+                                    ;
+                                } )
+                                ->where('classes_learners.cat_no', $class->cat_id)
+                                ->get();
+        
         return view('instructor.dashboard',  $data );
     }
     
@@ -196,5 +233,67 @@ class InstructorController extends Controller
         }
         // $classes  = Category::get()->where("org_no", Auth::guard('organization')->user()->org_id)->sortByDesc('cat_id')->values();
         return response()->json( $classes->toArray() )->header('Content-Type', 'application/json');
+    }
+
+    function instructorUploadClassPost(Request $request, Category $class)
+    {
+        $validated = $request->validate([
+            
+            'content' => 'required',
+        ]);
+        $validated['cat_no'] = $class->cat_id;
+        $post = Post::create($validated);
+        $post_instructor = PostInstructor::create([
+            'instr_no'=>Auth::guard('instructor')->user()->instr_id,
+            'post_no'=>$post->id,
+        ]);
+        if ($request->file('post_attachment') !== null) {
+            foreach ($request->file('post_attachment') as $key => $file) {
+                $url = $file->store('post_attachment', 'public');
+                $post_attachment = PostAttachment::create([
+                    'url'=>$url,
+                    'post_no'=>$post->id,
+                ]);
+            }
+        }
+        $post->class->cat_title;
+        $post->attachments;
+        $post->likes;
+        $post->comments;
+        $post->poster = $post->post_instructor->instructor->instr_name??$post->instructor->instr_name??'';
+        $post->date = $post->created_at->diffForHumans();
+        return response()->json( ['status'=>true, 'post'=>$post] )->header('Content-Type', 'application/json');
+    }
+
+    function instructorUploadClassPostComment(Request $request, Category $class)
+    {
+        $validated = $request->validate([
+            'content' => 'required',
+            'post_no' => 'required',
+        ]);
+        $validated['instr_no'] = Auth::guard('instructor')->user()->instr_id;
+        $comment_post = CommentPost::create($validated);
+        
+       
+        $comment_post->poster = $comment_post->instructor->instr_name??$post->instructor->instr_name??'';
+        $comment_post->date = $comment_post->created_at->diffForHumans();
+        return response()->json( ['status'=>true, 'comment_post'=>$comment_post, 'comment_post_count'=>CommentPost::where('post_no', $validated['post_no'] )->count() ] )->header('Content-Type', 'application/json');
+    }
+    function instructorUploadClassPostLike(Request $request, Category $class)
+    {
+        $validated = $request->validate([
+            'post_no' => 'required',
+        ]);
+        $validated['instr_no'] = Auth::guard('instructor')->user()->instr_id;
+        $like_post = PostLike::where('instr_no', $validated['instr_no'])
+                    ->where('post_no', $validated['post_no'] );
+        if ($like_post->first() == null) {
+            $like_post = PostLike::create($validated);
+            return response()->json( ['status'=>true, 'like_post_count'=>PostLike::where('post_no', $validated['post_no'] )->count()] )->header('Content-Type', 'application/json');
+        }else{
+            $like_post->delete();
+        return response()->json( ['status'=>false, 'like_post_count'=>PostLike::where('post_no', $validated['post_no'] )->count() ] )->header('Content-Type', 'application/json');
+        }
+        
     }
 }

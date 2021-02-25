@@ -26,11 +26,28 @@
 		    @case('add_course')
 		        <link href="/assets/css/pages/wizard/wizard-1.css" rel="stylesheet" type="text/css" />
 		        @break
-		
+		    @case('class-dashboard')
+		    	<style type="text/css">
+					.progress{
+						height: .5rem;
+					}
+				</style>
+		        <link href="/assets/css/CalendarPicker.style.css" rel="stylesheet" type="text/css" />
+		        @break
+			@case('view-poll')
+				<!--begin::Page Custom Styles(used by this page)-->
+				
+				<!--end::Page Custom Styles-->
+				@break
 		    @default
+		    	<style type="text/css">
+		    		.m_active .active {
+		    			background: aliceblue;
+		    		}
+		    	</style>
+		    
 		            {{-- Default case... --}}
 		@endswitch
-		
 		<!--begin::Global Theme Styles(used by all pages)-->
 		<link href="/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
 		<link href="/assets/plugins/custom/prismjs/prismjs.bundle.css" rel="stylesheet" type="text/css" />
@@ -85,7 +102,7 @@
 									<span class="navi-text text-muted text-hover-primary">{{Auth::guard('learner')->user()->learner_email}}</span>
 								</span>
 							</a>
-							<a href="{{ route('organization_logout') }}" class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Logout Out</a>
+							<a href="{{ route('learner_logout') }}" class="btn btn-sm btn-light-primary font-weight-bolder py-2 px-5">Logout Out</a>
 						</div>
 					</div>
 				</div>
@@ -158,7 +175,7 @@
 										
 										<!--begin::Item-->
 										<li class="nav-item mr-3">
-											<a href="{{ route('learner_activities') }}" class="nav-link py-4 px-6  {{$header=='activity'?'active':''}}" role="tab">Activities</a>
+											<a href="{{ route('learner_courses') }}" class="nav-link py-4 px-6  {{$header=='course'?'active':''}}" role="tab">Activities</a>
 										</li>
 										<!--end::Item-->
 										
@@ -648,5 +665,28 @@
 							<!--end::Container-->
 						</div>
 						<!--end::Top-->
-						
+
+						@if ($errors->any())
+						    
+						            @foreach ($errors->all() as $error)
+						            	<script type="text/javascript">
+											window.addEventListener('load', (e)=>{
+												swal.fire({
+								                text: "{{ $error }}",
+								                icon: "error",
+								                buttonsStyling: false,
+								                confirmButtonText: "Ok, got it!",
+						                        customClass: {
+						    						confirmButton: "btn font-weight-bold btn-light-primary"
+							    					}
+									            }).then(function() {
+													// KTUtil.scrollTop();
+												});
+											})
+											
+										</script>
+						                
+						            @endforeach
+						       
+						@endif
 					

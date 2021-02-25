@@ -63,6 +63,16 @@
 				<script src="/assets/js/instructor/assignments.js"></script>
 				<!--end::Page Scripts-->
 		        @break
+		    @case('class-assignment-submission')
+		        <!--begin::Page Scripts(used by this page)-->
+				<script src="/assets/js/instructor/submitted_assignments.js"></script>
+				<!--end::Page Scripts-->
+		        @break
+		    @case('class-quiz-submission')
+		        <!--begin::Page Scripts(used by this page)-->
+				<script src="/assets/js/instructor/submitted_quizzes.js"></script>
+				<!--end::Page Scripts-->
+		        @break
 		    @case('quizzes')
 		        <!--begin::Page Scripts(used by this page)-->
 				<script src="/assets/js/instructor/quizzes.js"></script>
@@ -99,17 +109,16 @@
 					  display: none;
 					}
 					</style>
+					
 		        <script src="/assets/js/CalendarPicker.js"></script>
-				<script type="text/javascript">
-
-					const myCalender = new CalendarPicker('#myCalendarWrapper', {
-				            
-				      });
-				      	
-				</script>
+				<script src="/assets/js/instructor/class-dashboard.js"></script>
 
 		        @break
+		    @case('dashboard')
+		        <!--begin::Page Scripts(used by this page)-->
+				<script src="/assets/js/instructor/dashboard.js"></script>
 
+		        @break
 		  
 		  	@case('add_course')
 		        <!--begin::Page Scripts(used by this page)-->

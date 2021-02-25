@@ -7,6 +7,49 @@
 							<!--begin::Container-->
 							<!--begin::Container-->
 							<div class="container">
+								<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+								    <div class="modal-dialog" role="document">
+								        <div class="modal-content">
+								            <div class="modal-header">
+								                
+								                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								                    <i aria-hidden="true" class="ki ki-close"></i>
+								                </button>
+								            </div>
+								            <div class="modal-body">
+								                <div class="form-group">
+												    <label>Course Title <span class="text-danger">*</span></label>
+												    <input type="text" name="course_title" class="form-control"  />
+												    
+												</div>
+												<div class="form-group">
+												    <label>Course Description <span class="text-danger">*</span></label>
+												    <textarea class="form-control" name="course_desc" style="height: 150px;"></textarea>
+												    
+												</div>
+												<div class="form-group">
+												    <label>Open <span class="text-danger">*</span></label>
+												    <input type="radio" value="1" name="course_status" class="form-control open" />
+												</div>
+												<div class="form-group">
+												    <label>Closed <span class="text-danger">*</span></label>
+												    <input type="radio" value="0" name="course_status" class="form-control closed" />
+												</div>
+												<input type="hidden" name="course_id">
+												@csrf
+												
+								            </div>
+								            <div class="modal-footer">
+								                <button type="button" class="btn btn-light-primary font-weight-bold" data-dismiss="modal">Close</button>
+								                <button type="button" onclick="updateChange()" class="btn btn-primary font-weight-bold" data-dismiss="modal">Save changes</button>
+								            </div>
+								            
+								        </div>
+								    </div>
+								</div>
+								<button type="button" class="btn btn-primary d-none" id="form_button" data-toggle="modal" data-target="#exampleModal">
+								    Launch form
+								</button>
 								<!--begin::Profile Account Information-->
 								<div class="d-flex flex-row">
 									<!--begin::Aside-->

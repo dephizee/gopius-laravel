@@ -6,8 +6,8 @@ function addNewOption() {
     var optionsStr = `<div class="input-group">
                             <div class="input-group-prepend">
                                 <span class="input-group-text">
-                                    <label class="radio radio-inline m-0 p-0">
-                                        <input type="radio" name="m_option_radio" value="${optionsList.children.length}"/>
+                                    <label class="checkbox checkbox-inline m-0 p-0">
+                                        <input type="checkbox" name="m_option_radio" value="${optionsList.children.length}"/>
                                         <span></span>
                                     </label>
                                 </span>
@@ -357,7 +357,7 @@ var uploadQuiz = ()=>{
     }
     swal.fire({
         text: "Are you done building?",
-        icon: "Success",
+        icon: "success",
         showCancelButton: true,
         buttonsStyling: false,
         confirmButtonText: "Yes, submit!",

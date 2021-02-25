@@ -19,4 +19,15 @@ class ClassLearner extends Model
     	'cat_no',
     	'learner_no',
     ];
+
+    public function class()
+    {
+        // belongsTo(RelatedModel, foreignKey = class_id, keyOnRelatedModel = id)
+        return $this->belongsTo(Category::class, 'cat_no', 'cat_id');
+    }
+    public function instructor()
+    {
+        // belongsTo(RelatedModel, foreignKey = class_id, keyOnRelatedModel = id)
+        return $this->belongsTo(Learner::class, 'learner_no', 'learner_id');
+    }
 }

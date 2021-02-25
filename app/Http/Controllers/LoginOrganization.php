@@ -6,11 +6,15 @@ use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 use App\Models\Organization;
 use App\Models\OrganizationType;
 use App\Models\Country;
 use App\Models\State;
+use App\Models\VerifyOrganizationTable;
+
+use App\Mail\RegistrationSuccessful;
 
 
 class LoginOrganization extends Controller
@@ -56,7 +60,7 @@ class LoginOrganization extends Controller
     function stateJson(Request $request, $country_id)
     {
     	$org_types  = OrganizationType::cursor();
-    	$states  = State::get()->where("country_id", $country_id)->values();
+    	$states  = State::where("country_id", $country_id)->orderBy('name')->get();
 
     	return response()->json( $states->toArray() )->header('Content-Type', 'application/json');
     }
@@ -69,7 +73,10 @@ class LoginOrganization extends Controller
 	        'lastname' => 'required|max:255',
 	        'email' => 'required|unique:organizations|max:255',
 	        'phone' => 'required|max:255',
-	        'org_name' => 'required|max:255',
+            'org_name' => 'required|max:255',
+            'org_size' => 'required|max:255',
+            'org_priority' => 'required|max:255',
+	        'org_why' => 'required|max:255',
 	        'org_type_no' => 'required|exists:organization_types,org_type_id',
 	        'org_address' => 'required|max:255',
 	        'state_no' => 'required|max:255',
@@ -79,11 +86,35 @@ class LoginOrganization extends Controller
         $validated['password'] = Hash::make($validated['password']);
 	    $organization = Organization::create($validated);
 	    
-        Auth::guard('organization')->login($organization);
-        $request->session()->flash('status', 'Registration was successful!');
-        
+        // Auth::guard('organization')->login($organization);
+        $request->session()->flash('message', 'Registration was successful, Check Email to finish Registration!');
+        $verifyOrganization = VerifyOrganizationTable::create([
+            'org_no' => $organization->org_id,
+            'token' => sha1(time())
+        ]);
+        Mail::to($organization)->send(new RegistrationSuccessful($organization));
 	    return redirect()->route('login');
 
     	// return view('organization.register', $data);
+    }
+
+    function registerVerifyToken($token)
+    {
+        $verifyOrg = VerifyOrganizationTable::where('token', $token)->first();
+        if(isset($verifyOrg) ){
+            $org = $verifyOrg->organization;
+            if(!$org->approved) {
+              $org->approved = 1;
+              $org->save();
+              $status = "Your e-mail is verified. You can now login.";
+            } else {
+              $status = "Your e-mail is already verified. You can now login.";
+            }
+        } else {
+            return abort(404);
+        }
+        $verifyOrg->token = sha1(time());
+        $verifyOrg->save();
+        return redirect()->route('login')->with('message', $status);
     }
 }

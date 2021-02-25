@@ -27,49 +27,17 @@
 														<tr>
 															<td class="">
 																<div class="text-left mb-3">
-																	<span class="text-muted font-weight-bold">0%</span>
+																	<span class="text-muted font-weight-bold">{{round(($option->votes/($poll->total_votes==0?1:$poll->total_votes))*100)}}%</span>
 																	<span class="text-muted font-weight-bold float-right">{{$option->poll_option_title}}</span>
 																</div>
 																<div class="progress mb-5">
-																    <div class="progress-bar bg-danger" role="progressbar" style="width: 0%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+																    <div class="progress-bar bg-success" role="progressbar" style="width: {{($option->votes/($poll->total_votes==0?1:$poll->total_votes))*100}}%" aria-valuenow="{{($option->votes/($poll->total_votes==0?1:$poll->total_votes))*100}}" aria-valuemin="0" aria-valuemax="100"></div>
 																</div>
 															</td>
 														</tr>
 													@endforeach
 													
-													<tr>
-														<td class="">
-															<div class="text-left mb-3">
-																<span class="text-muted font-weight-bold">20%</span>
-																<span class="text-muted font-weight-bold float-right">Instagram Ads</span>
-															</div>
-															<div class="progress mb-5">
-															    <div class="progress-bar bg-warning" role="progressbar" style="width: 20%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-															</div>
-														</td>
-													</tr>
-													<tr>
-														<td class="">
-															<div class="text-left mb-3">
-																<span class="text-muted font-weight-bold">80%</span>
-																<span class="text-muted font-weight-bold float-right">Google Ads</span>
-															</div>
-															<div class="progress mb-5">
-															    <div class="progress-bar bg-primary" role="progressbar" style="width: 80%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-															</div>
-														</td>
-													</tr>
-													<tr>
-														<td class="">
-															<div class="text-left mb-3">
-																<span class="text-muted font-weight-bold">50%</span>
-																<span class="text-muted font-weight-bold float-right">Twitter Ads</span>
-															</div>
-															<div class="progress mb-5">
-															    <div class="progress-bar bg-info" role="progressbar" style="width: 50%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-															</div>
-														</td>
-													</tr>
+													
 												</tbody>
 											</table>
 

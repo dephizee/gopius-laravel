@@ -35,4 +35,26 @@ class Quiz extends Model
         // belongsTo(RelatedModel, foreignKey = course_id, keyOnRelatedModel = id)
         return $this->belongsTo(Course::class, 'course_no', 'course_id');
     }
+
+    /**
+     * Quiz has many Questions.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function questions()
+    {
+        // hasMany(RelatedModel, foreignKeyOnRelatedModel = quiz_id, localKey = id)
+        return $this->hasMany(QuizQuestion::class, 'quiz_no', 'quiz_id');
+    }
+
+    /**
+     * Quiz belongs to Instructor.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function instructor()
+    {
+        // belongsTo(RelatedModel, foreignKey = instructor_id, keyOnRelatedModel = id)
+        return $this->belongsTo(Instructor::class, 'instr_no', 'instr_id');
+    }
 }

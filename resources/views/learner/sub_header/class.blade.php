@@ -1,5 +1,6 @@
 
 						<!--begin::Bottom-->
+						<!--begin::Bottom-->
 						<div class="header-bottom">
 							<!--begin::Container-->
 							<div class="container">
@@ -37,17 +38,21 @@
 											<div id="kt_header_menu" class="header-menu header-menu-mobile header-menu-layout-default">
 												<!--begin::Nav-->
 												<ul class="menu-nav">
-													<li class="menu-item menu-item-{{$dashboard??'rel'}}" aria-haspopup="true">
-														<a href="{{ route('learner_dashboard') }}" class="menu-link">
-															<span class="menu-text">Dashboard</span>
+													<li class="menu-item menu-item-{{$class??'rel'}}" aria-haspopup="true">
+														<a href="{{ route('learner_classes') }}" class="menu-link">
+															<span class="menu-text">Classes</span>
 														</a>
 													</li>
-												
-													{{-- <li class="menu-item menu-item-{{$customize??'rel'}}" aria-haspopup="true">
-														<a href="{{ route('organization_customize') }}" class="menu-link">
-															<span class="menu-text">Customize</span>
-														</a>
-													</li> --}}
+													@isset ($class_title)
+													    <li class="menu-item menu-item-active" aria-haspopup="true">
+															<a href="" class="menu-link">
+																<span class="menu-text">{{$class_title}}</span>
+															</a>
+														</li>
+													@endisset
+													
+													
+													
 												</ul>
 												<!--end::Nav-->
 											</div>
@@ -63,6 +68,7 @@
 							</div>
 							<!--end::Container-->
 						</div>
+						<!--end::Bottom-->
 						<!--end::Bottom-->
 					</div>
 					<!--end::Header-->

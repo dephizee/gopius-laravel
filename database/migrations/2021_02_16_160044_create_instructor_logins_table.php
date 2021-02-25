@@ -13,10 +13,10 @@ class CreateInstructorLoginsTable extends Migration
      */
     public function up()
     {
-        // Schema::create('instructor_logins', function (Blueprint $table) {
-        //     $table->id();
-        //     $table->timestamps();
-        // });
+        Schema::table('courses', function (Blueprint $table) {
+            $table->unsignedBigInteger('instr_no');
+            $table->foreign('instr_no')->references('instr_id')->on('instructors');
+        });
     }
 
     /**
@@ -26,6 +26,9 @@ class CreateInstructorLoginsTable extends Migration
      */
     public function down()
     {
-        // Schema::dropIfExists('instructor_logins');
+        Schema::table('courses', function (Blueprint $table) {
+            $table->dropForeign('courses_instr_no_foreign');
+            $table->dropColumn('instr_no');
+        });
     }
 }

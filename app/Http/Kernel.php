@@ -67,8 +67,13 @@ class Kernel extends HttpKernel
         'auth_Admin' => \App\Http\Middleware\AuthAdmin::class,
         'auth_instructor' => \App\Http\Middleware\AuthInstructor::class,
         'instructor_class_access' => \App\Http\Middleware\InstructorClassAccess::class,
+        'learner_class_access' => \App\Http\Middleware\LearnerClassAccess::class,
         'auth_instructor_login' => \App\Http\Middleware\AuthInstructorLogin::class,
         'auth_learner_login' => \App\Http\Middleware\AuthLearnerLogin::class,
         'auth_learner' => \App\Http\Middleware\AuthLearner::class,
+        'poll_learner_access' => \App\Http\Middleware\PollLearnerAccess::class,
+        'quiz_learner_access' => \App\Http\Middleware\QuizLearnerAccess::class,
+        'assignment_learner_access' => \App\Http\Middleware\AssignmentLearnerAccess::class,
+        'course_learner_access' => \App\Http\Middleware\CourseLearnerAccess::class,
     ];
 }

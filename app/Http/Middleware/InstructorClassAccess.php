@@ -22,6 +22,7 @@ class InstructorClassAccess
     public function handle(Request $request, Closure $next)
     {
         $class = $request->route('class');
+        // dd($class);
         $classes  = ClassInstructor::where("instr_no", Auth::guard('instructor')->user()->instr_id)->pluck('cat_no')->toArray();
         if ( !in_array($class->cat_id, array_values($classes)) ) {
             

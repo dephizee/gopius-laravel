@@ -39,7 +39,7 @@
 												<!--begin::Contact-->
 												<div class="py-9">
 													<div class="d-flex align-items-center justify-content-between mb-2">
-														<p class="font-weight-bold m-2 text-center">A school with the best professionals and condusive environment at the heart of the city of Uyo.</p>
+														
 														
 													</div>
 													
@@ -63,7 +63,7 @@
 														<!--end::Symbol-->
 														<!--begin::Title-->
 														<div>
-															<a href="#" class="font-size-h6 text-dark-75 text-hover-primary font-weight-bolder">08062112993</a>
+															<a href="#" class="font-size-h6 text-dark-75 text-hover-primary font-weight-bolder">{{Auth::guard('organization')->user()->phone}} </a>
 															<div class="font-size-sm text-muted font-weight-bold mt-1">Phone Number</div>
 														</div>
 														<!--end::Title-->
@@ -83,7 +83,7 @@
 														<!--end::Symbol-->
 														<!--begin::Title-->
 														<div>
-															<a href="#" class="font-size-h6 text-dark-75 text-hover-primary font-weight-bolder">greenedu@gopius.com</a>
+															<a href="#" class="font-size-h6 text-dark-75 text-hover-primary font-weight-bolder">{{Auth::guard('organization')->user()->email}} </a>
 															<div class="font-size-sm text-muted font-weight-bold mt-1">Email Address</div>
 														</div>
 														<!--end::Title-->
@@ -103,17 +103,12 @@
 														<!--end::Symbol-->
 														<!--begin::Title-->
 														<div>
-															<a href="#" class="font-size-h6 text-dark-75 text-hover-primary font-weight-bolder">Uyo, Nigeria</a>
+															<a href="#" class="font-size-h6 text-dark-75 text-hover-primary font-weight-bolder">{{Auth::guard('organization')->user()->state->name}}, {{Auth::guard('organization')->user()->state->country->name}} </a>
 															<div class="font-size-sm text-muted font-weight-bold mt-1">Location</div>
 														</div>
 														<!--end::Title-->
 													</div>
-													<div class="navi-item mb-2 mt-4 align-items-center">
-														<a href="admin/personal-profile.html" class="navi-link p-0">
-															
-															<button type="reset" class="btn btn-success mr-2">Edit personal Information</button>
-														</a>
-													</div>
+													
 												</div>
 												<!--end::Nav-->
 											</div>
@@ -125,6 +120,7 @@
 									<!--begin::Content-->
 									<div class="flex-row-fluid ml-lg-8">
 										<!--begin::Card-->
+										<form class="form" method="post">
 										<div class="card card-custom">
 											<!--begin::Header-->
 											<div class="card-header py-3">
@@ -133,41 +129,34 @@
 													<span class="text-muted font-weight-bold font-size-sm mt-1">Change your account settings</span>
 												</div>
 												<div class="card-toolbar">
-													<button type="reset" class="btn btn-success mr-2">Save Changes</button>
+													<button type="submit" class="btn btn-success mr-2">Save Changes</button>
 													<button type="reset" class="btn btn-secondary">Cancel</button>
 												</div>
 											</div>
 											<!--end::Header-->
 											<!--begin::Form-->
-											<form class="form">
+											
 												<div class="card-body">
 													<!--begin::Heading-->
 													
 													<!--begin::Form Group-->
 													<div class="form-group">
 													   <label>Organization Name:</label>
-													   <input type="text" class="form-control form-control-solid" />
+													   <input type="text" class="form-control form-control-solid" value="{{Auth::guard('organization')->user()->org_name}}" disabled />
 													   <span class="form-text text-muted">Please enter your Orgnization name</span>
 													 </div>
 													<!--begin::Form Group-->
 													<div class="form-group">
 													   <label>Organization Email:</label>
-													   <input type="email" class="form-control form-control-solid" />
+													   <input type="email" disabled value="{{Auth::guard('organization')->user()->email}}" class="form-control form-control-solid" />
 													   <span class="form-text text-muted">Please enter your Orgnization Email</span>
 													</div>
 													<div class="row mb-5">
 														<div class="col-sm-6">
 															<div class="form-group">
 															   <label>Site Description</label>
-															   <input type="hidden" class="form-control form-control-solid" />
-															   <div class="card card-custom ">
-																    
-																    <div class="card-body m-0 p-0">
-																        <div id="kt_quil_1" style="height: 325px">
-																            Compose a message
-																        </div>
-																    </div>
-																</div>
+															   <textarea name="about_org" style="height: 150px" class="form-control form-control-solid" >{{Auth::guard('organization')->user()->about_org}}</textarea>
+															   
 															   <span class="form-text text-muted">Please enter your Orgnization Description ( maximum limit 100 words )</span>
 															</div>
 															<div class="image-input image-input-outline mr-5" id="kt_long_logo" >
@@ -202,22 +191,22 @@
 														<div class="col-sm-6">
 															<div class="form-group">
 															   <label>Organization Address:</label>
-															   <input type="email" class="form-control form-control-solid" />
+															   <input type="email" class="form-control form-control-solid" disabled value="{{Auth::guard('organization')->user()->org_address}}" />
 															   <span class="form-text text-muted">Please enter your Orgnization Address</span>
 															</div>
 															<div class="form-group">
 															   <label>Company Phone number:</label>
-															   <input type="text" class="form-control form-control-solid" />
+															   <input type="text" name="org_phone" class="form-control form-control-solid" value="{{Auth::guard('organization')->user()->org_phone}}" />
 															   <span class="form-text text-muted">Please enter your company phone number</span>
 															</div>
 															<div class="form-group">
 															   <label>Homepage View:</label>
-															   <input type="text" class="form-control form-control-solid" />
+															   <input type="text" name="homepage" class="form-control form-control-solid" value="{{Auth::guard('organization')->user()->homepage}}" />
 															   <span class="form-text text-muted">Please enter your Homepage View</span>
 															</div>
 															<div class="form-group">
 															   <label>Website:</label>
-															   <input type="text" class="form-control form-control-solid" />
+															   <input type="text" name="website" class="form-control form-control-solid" value="{{Auth::guard('organization')->user()->website}}" />
 															   <span class="form-text text-muted">Please enter your website</span>
 															</div>
 														</div>
@@ -231,7 +220,7 @@
 																	<i class="socicon-facebook"></i>
 																</span>
 															</div>
-															<input type="text" class="form-control form-control-solid" value="" placeholder="Facebook Link">
+															<input type="text" name="fb" class="form-control form-control-solid" value="{{Auth::guard('organization')->user()->fb}}" placeholder="Facebook Link">
 														</div>
 														<div class="input-group input-group-solid mb-4">
 															<div class="input-group-prepend">
@@ -239,7 +228,7 @@
 																	<i class="socicon-twitter"></i>
 																</span>
 															</div>
-															<input type="text" class="form-control form-control-solid" value="" placeholder="@twitter username">
+															<input type="text" name="twitter" class="form-control form-control-solid" value="{{Auth::guard('organization')->user()->twitter}}" placeholder="@twitter username">
 														</div>
 														<div class="input-group input-group-solid mb-4">
 															<div class="input-group-prepend">
@@ -247,9 +236,11 @@
 																	<i class="socicon-linkedin"></i>
 																</span>
 															</div>
-															<input type="text" class="form-control form-control-solid" value="" placeholder="LinkedIn Link">
+															<input type="text" name="linkedin" class="form-control form-control-solid" value="{{Auth::guard('organization')->user()->linkedin}}" placeholder="LinkedIn Link">
 														</div>
 													</div>
+													@csrf
+													
 													<!--begin::Form Group-->
 													
 													<!--begin::Form Group-->
@@ -261,9 +252,10 @@
 														</div>
 													</div>
 												</div>
-											</form>
+											
 											<!--end::Form-->
 										</div>
+										</form>
 										<!--end::Card-->
 									</div>
 									<!--end::Content-->
