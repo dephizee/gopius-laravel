@@ -33,6 +33,6 @@ class RegistrationSuccessful extends Mailable
      */
     public function build()
     {
-        return $this->from('info@mail.com')->subject('Access Credentails')->markdown('mails.registration_success');
+        return $this->markdown('mails.registration_success');
     }
 }

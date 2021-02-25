@@ -30,6 +30,6 @@ class SendInstructorLogin extends Mailable
      */
     public function build()
     {
-        return $this->markdown('mails.send_instructor_login');
+        return $this->subject('Access Instructor Credentails')->markdown('mails.send_instructor_login');
     }
 }
