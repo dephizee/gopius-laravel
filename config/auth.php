@@ -96,7 +96,7 @@ return [
         ],
         'instructor' => [
             'driver' => 'eloquent',
-            'model' => App\Models\instructor::class,
+            'model' => App\Models\Instructor::class,
         ],
         'learner' => [
             'driver' => 'eloquent',
