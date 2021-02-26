@@ -2,6 +2,7 @@ deployment:
   tasks:
     - export DEPLOYPATH=/home/gopius/build.gopius.com/
     - /bin/cp -r * $DEPLOYPATH #copy all from root
-    - /bin/cp -r ./public/m_server/* $DEPLOYPATH
+#    - /bin/cp -r ./public/* $DEPLOYPATH/public_html/
+    - /bin/cp ./public/assets $DEPLOYPATH
     - /bin/cp ./public/m_server/index.php $DEPLOYPATH
     - /bin/cp ./public/m_server/.htaccess $DEPLOYPATH
