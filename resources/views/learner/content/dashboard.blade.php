@@ -145,7 +145,7 @@
 																<!--begin::Body-->
 																<div class="pt-5">
 																	@foreach ($post->attachments as $attachment)
-																		<div class=" mt-2 bgi-no-repeat bgi-size-cover rounded min-h-265px" style="background-image: url({{ asset('storage/'.$attachment->url) }})"></div>
+																		<div class=" mt-2 bgi-no-repeat bgi-size-cover rounded min-h-265px" style="background-image: url({{ asset('files/'.$attachment->url) }})"></div>
 																	@endforeach
 																	<!--begin::Text-->
 																	<p class="text-dark-75 font-size-lg font-weight-normal mb-2"><?=$post->content?></p>
@@ -157,7 +157,7 @@
 																		<div class="d-flex align-items-center mb-8">
 																			<!--begin::Symbol-->
 																			<div class="symbol mr-5 pt-1">
-																				<div class="symbol-label min-w-65px min-h-100px" style="background-image: url({{ asset('storage/'.$course->course_cover_img_url) }})"></div>
+																				<div class="symbol-label min-w-65px min-h-100px" style="background-image: url({{ asset('files/'.$course->course_cover_img_url) }})"></div>
 																			</div>
 																			<!--end::Symbol-->
 																			<!--begin::Info-->

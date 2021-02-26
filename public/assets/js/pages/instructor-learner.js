@@ -97,7 +97,7 @@ var KTDatatableDataLocalDemo = function() {
                 width: 125,
                 overflow: 'visible',
                 autoHide: false,
-                template: function() {
+                template: function(row) {
                     return '\
                             <a href="javascript:;" class="btn btn-sm btn-clean btn-icon mr-2" title="Edit details">\
                                 <span class="svg-icon svg-icon-md">\
@@ -120,6 +120,9 @@ var KTDatatableDataLocalDemo = function() {
                                         </g>\
                                     </svg>\
                                 </span>\
+                            </a>\
+                            <a onclick="sendDetails(this)"  id = "el_'+row.learner_id+'" class="btn btn-sm btn-clean btn-icon" title="Resend Details Mail">\
+                                <i class="flaticon-email-black-circular-button"></i>\
                             </a>\
                         ';
                 },
@@ -159,5 +162,17 @@ var getAllOrganizationCourses = async ()=>{
         console.log(result);
         mNetSource = result;
         KTDatatableDataLocalDemo.init();
+    });
+}
+var sendDetails = async (target)=>{
+    var learner_id = target.id.split('_')[1];
+    KTApp.block(target.parentElement, {});
+    await fetch(`/organization/learner/${learner_id}/mail-details/`)
+    .then((resp)=>resp.json())
+    .then((result)=>{
+        if (result.status) {
+            toastr.success(result.message);
+            KTApp.unblock(target.parentElement);
+        }
     });
 }

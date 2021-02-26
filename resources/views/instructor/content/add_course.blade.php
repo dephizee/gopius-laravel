@@ -126,7 +126,7 @@
 																	<div class="form-group row">
 																		<span class="col-sm-12 col-form-label">Upload Course Cover Image</span>
 																		<div id="kt_user_avatar" class="image-input image-input-outline w-275px" >
-																			<div class="image-input-wrapper bgi-no-repeat bgi-size-cover rounded min-h-180px w-275px" style="background-image: url(assets/media/stock-600x400/img-70.jpg)"></div>
+																			<div class="image-input-wrapper bgi-no-repeat bgi-size-cover rounded min-h-180px w-275px" style="background-image: url(/assets/media/stock-600x400/img-70.jpg)"></div>
 																			<label class="btn p-5 btn-xs btn-icon btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar" style="right: 20px; bottom: 20px; top: auto;">
 																				<span class="svg-icon svg-icon-primary svg-icon-2x"><!--begin::Svg Icon | path:C:\wamp64\www\keenthemes\themes\metronic\theme\html\demo7\dist/../src/media/svg/icons\Communication\Write.svg-->
 																					<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">

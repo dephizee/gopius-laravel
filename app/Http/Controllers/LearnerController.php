@@ -254,6 +254,14 @@ class LearnerController extends Controller
         $learners  = Learner::get()->where("org_no", Auth::guard('organization')->user()->org_id)->sortByDesc('learner_id')->values();
         return response()->json( $learners->toArray() )->header('Content-Type', 'application/json');
     }
+    function sendLearnerMail(Learner $learner)
+    {
+        Mail::to($learner->learner_email)->send(new SendLearnerLogin($learner));
+        return response()->json( [
+            'status' => true,
+            'message' => 'Learner Mail Sent Successfully, Learner will recieve login details.',
+        ] )->header('Content-Type', 'application/json');
+    }
     function newLearner(Request $request)
     {
         $data['view'] = 'add_learner';

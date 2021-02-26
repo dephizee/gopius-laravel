@@ -239,7 +239,7 @@
 																<!--begin::Body-->
 																<div class="pt-5">
 																	@foreach ($post->attachments as $attachment)
-																		<div class=" mt-2 bgi-no-repeat bgi-size-cover rounded min-h-265px" style="background-image: url({{ asset('storage/'.$attachment->url) }})"></div>
+																		<div class=" mt-2 bgi-no-repeat bgi-size-cover rounded min-h-265px" style="background-image: url({{ asset('files/'.$attachment->url) }})"></div>
 																	@endforeach
 																	<!--begin::Text-->
 																	<p class="text-dark-75 font-size-lg font-weight-normal mb-2"><?=$post->content?></p>
@@ -251,7 +251,7 @@
 																		<div class="d-flex align-items-center mb-8">
 																			<!--begin::Symbol-->
 																			<div class="symbol mr-5 pt-1">
-																				<div class="symbol-label min-w-65px min-h-100px" style="background-image: url({{ asset('storage/'.$course->course_cover_img_url) }})"></div>
+																				<div class="symbol-label min-w-65px min-h-100px" style="background-image: url({{ asset('files/'.$course->course_cover_img_url) }})"></div>
 																			</div>
 																			<!--end::Symbol-->
 																			<!--begin::Info-->
@@ -360,8 +360,9 @@
 																	<!--end::Text-->
 																	<!--begin::Action-->
 																	<div class="d-flex align-items-center">
-																		<input type="hidden" name="_clink" value="{{route('learner_class_upload_post_comment', [$post->class->cat_id])}}">
-																		<input type="hidden" name="_llink" value="{{route('learner_class_upload_post_like', [$post->class->cat_id])}}">
+																		<input type="hidden" name="_clink" value="{{route('instructor_class_upload_post_comment', [$post->class->cat_id])}}">
+																		<input type="hidden" name="_llink" value="{{route('instructor_class_upload_post_like', [$post->class->cat_id])}}">
+																		
 																		<a onclick="displayComment(this)" class="btn btn-hover-text-primary btn-hover-icon-primary btn-sm btn-text-dark-50 bg-hover-light-primary rounded font-weight-bolder font-size-sm p-2
 																		mr-2">
 																		<i class="fas fa-comments"></i>

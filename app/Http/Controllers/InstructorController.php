@@ -44,6 +44,14 @@ class InstructorController extends Controller
         $instructors  = Instructor::get()->where("org_no", Auth::guard('organization')->user()->org_id)->sortByDesc('instr_id')->values();
         return response()->json( $instructors->toArray() )->header('Content-Type', 'application/json');
     }
+    function sendInstructorMail(Instructor $instructor)
+    {
+        Mail::to($instructor->instr_email)->send(new SendInstructorLogin($instructor));
+        return response()->json( [
+            'status' => true,
+            'message' => 'Instructor Mail Sent Successfully, Instructor will recieve login details.',
+        ] )->header('Content-Type', 'application/json');
+    }
     function newInstructor(Request $request)
     {
         $data['view'] = 'add_instructor';

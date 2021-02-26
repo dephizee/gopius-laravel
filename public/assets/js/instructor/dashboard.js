@@ -55,7 +55,7 @@ var sendPostCommentToBackEnd = async (data, target)=>{
             text: "Unable to complete task",
             icon: "error",
             buttonsStyling: false,
-            confirmButtonText: "Type Question",
+            confirmButtonText: "Ok, got it",
             customClass: {
                 confirmButton: "btn font-weight-bold btn-light-primary"
             }
@@ -65,6 +65,7 @@ var sendPostCommentToBackEnd = async (data, target)=>{
     
 }
 var sendPostLikeToBackEnd = async (data, target)=>{
+    
     await fetch(target.parentElement.querySelector('input[name=_llink]').value,
                 {
                 method: 'POST',
@@ -96,7 +97,7 @@ var sendPostLikeToBackEnd = async (data, target)=>{
             text: "Unable to complete task",
             icon: "error",
             buttonsStyling: false,
-            confirmButtonText: "Type Question",
+            confirmButtonText: "Ok, got it",
             customClass: {
                 confirmButton: "btn font-weight-bold btn-light-primary"
             }

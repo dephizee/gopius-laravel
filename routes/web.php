@@ -99,12 +99,14 @@ Route::group(['prefix'=>'organization',], function(){
 
 		Route::get('/instructors', [InstructorController::class, 'instructor'])->name('organization_instuctors');
 		Route::get('/instructors-all', [InstructorController::class, 'allInstructors'])->name('organization_all_instructors');
+		Route::get('/instructor/{instructor}/mail-details', [InstructorController::class, 'sendInstructorMail']);
 		Route::get('/instructors-add', [InstructorController::class, 'newInstructor'])->name('organization_instuctor_new');
 		Route::post('/instructors-add', [InstructorController::class, 'processNewInstructor'])->name('organization_instuctor_new');
 
 
 		Route::get('/learners', [LearnerController::class, 'learner'])->name('organization_learners');
 		Route::get('/learners-all', [LearnerController::class, 'allLearners'])->name('organization_all_learners');
+		Route::get('/learner/{learner}/mail-details', [LearnerController::class, 'sendLearnerMail']);
 		Route::get('/learners-add', [LearnerController::class, 'newLearner'])->name('organization_learner_new');
 		Route::post('/learners-add', [LearnerController::class, 'processNewLearner'])->name('organization_learner_new');
 
