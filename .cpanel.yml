@@ -6,3 +6,4 @@ deployment:
     - /bin/cp -R ./public/assets $DEPLOYPATH
     - /bin/cp ./public/m_server/index.php $DEPLOYPATH
     - /bin/cp ./public/m_server/.htaccess $DEPLOYPATH
+    - /bin/ln -s /home/gopius/build.gopius.com/storage/app/public /home/gopius/build.gopius.com/storage
