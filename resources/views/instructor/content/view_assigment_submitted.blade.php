@@ -52,7 +52,7 @@
 											<div class="col-sm-12 text-dark-75 mt-2 mb-5">
 												@foreach ($assignment_learner->attachments as $attachment)
 													
-													<a href="{{asset('storage/'.$attachment->url)}}" class="d-inline-block m-2">
+													<a href="{{asset('files/'.$attachment->url)}}" class="d-inline-block m-2">
 														@if (in_array($attachment->type, ['jpeg', 'jpg', 'gif', 'JPG', 'tiff', 'tif', 'png']))
 															<i class="far fa-file-image icon-3x"></i>
 														@elseif (in_array($attachment->type, ['doc', 'docx']))
