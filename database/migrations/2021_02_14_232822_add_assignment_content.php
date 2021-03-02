@@ -14,7 +14,7 @@ class AddAssignmentContent extends Migration
     public function up()
     {
         Schema::table('assignments', function (Blueprint $table) {
-            $table->text('ass_content')->default("");
+            $table->text('ass_content');
             $table->dateTimeTz('end_date');
             $table->unsignedBigInteger('instr_no');
             $table->foreign('instr_no')->references('instr_id')->on('instructors');
