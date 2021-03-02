@@ -16,7 +16,7 @@ class CreateBlocksTable extends Migration
         Schema::create('blocks', function (Blueprint $table) {
             $table->id('block_id');
             $table->string('block_title');
-            $table->text('block_content')->default("");
+            $table->text('block_content');
             $table->timestamps();
             $table->unsignedBigInteger('chapter_no');
             $table->foreign('chapter_no')->references('chapter_id')->on('chapters');
