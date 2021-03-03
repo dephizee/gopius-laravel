@@ -13,7 +13,7 @@
 									<!--begin::Content-->
 									<div class="flex-row-fluid ml-lg-8">
 										<!--begin::Card-->
-										<form method="post" >
+										<form method="post" enctype="multipart/form-data" >
 											@csrf
 											
 											<div class="card card-custom">
@@ -71,7 +71,7 @@
 																<span class="col-sm-12 col-form-label">Upload Profile Picture</span>
 																<div class="col-lg-9 offset-lg-3 col-xl-6 offset-xl-6">
 																	<div class="image-input image-input-outline symbol symbol-circle" id="kt_user_avatar" >
-																		<div class="image-input-wrapper symbol symbol-circle " style="background-image: url(assets/media/svg/avatars/007-boy-2.svg)"></div>
+																		<div class="image-input-wrapper symbol symbol-circle " style="background-image: url({{ asset('files/'.Auth::guard('learner')->user()->learner_avatar_url) }})"></div>
 																		<label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
 																			<i class="fa fa-pen icon-sm text-muted"></i>
 																			<input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg">

@@ -2,30 +2,26 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendInstructorLogin;
+use App\Models\Assignment;
+use App\Models\Category;
+use App\Models\ClassInstructor;
+use App\Models\ClassLearner;
+use App\Models\CommentPost;
+use App\Models\Course;
+use App\Models\Instructor;
+use App\Models\Poll;
+use App\Models\Post;
+use App\Models\PostAttachment;
+use App\Models\PostInstructor;
+use App\Models\PostLike;
+use App\Models\Quiz;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-
-use App\Models\Category;
-use App\Models\Instructor;
-use App\Models\ClassInstructor;
-use App\Models\ClassLearner;
-use App\Models\Course;
-use App\Models\Poll;
-use App\Models\Assignment;
-use App\Models\Quiz;
-use App\Models\Post;
-use App\Models\PostInstructor;
-use App\Models\PostAttachment;
-use App\Models\CommentPost;
-use App\Models\PostLike;
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
-
-
-use App\Mail\SendInstructorLogin;
 
 
 
@@ -155,6 +151,13 @@ class InstructorController extends Controller
             $instructor->instr_email = $validated['instr_email'];
         }
         
+        if ($request->file('profile_avatar') !== null && $request->file('profile_avatar')->getSize() < 2200000) {
+
+            
+            
+            Storage::delete('public/'. $instructor->instr_avatar_url);
+            $instructor->instr_avatar_url = $request->file('profile_avatar')->store('instructor_images', 'public');
+        }
         
         $instructor->instr_name = $validated['instr_name'];
         

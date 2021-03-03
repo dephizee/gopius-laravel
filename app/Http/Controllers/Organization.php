@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\Auth;
-
 use App\Models\Category;
 use App\Models\Course;
-use App\Models\Requirement;
-use App\Models\Outcome;
-use App\Models\Setting;
-use App\Models\Learner;
 use App\Models\Instructor;
+use App\Models\Learner;
+use App\Models\Outcome;
+use App\Models\Post;
 use App\Models\Quiz;
+use App\Models\Requirement;
+use App\Models\Setting;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class Organization extends Controller
 {
@@ -41,6 +41,12 @@ class Organization extends Controller
                         ->where('categories.org_no', Auth::guard('organization')->user()->org_id)->get();
         $data['courses']  = Course::leftJoin('categories', 'courses.cat_no', '=', 'categories.cat_id')
                         ->where('categories.org_no', Auth::guard('organization')->user()->org_id)->get();
+
+        $data['posts'] = Post::
+                        leftJoin('categories', 'posts.cat_no', '=', 'categories.cat_id')
+                        ->where('categories.org_no', Auth::guard('organization')->user()->org_id)
+                        ->orderBy('posts.id', 'desc')
+                        ->simplePaginate(15);
         
         // dd($data['quizzes'][0]);
     	return view('organization.dashboard',  $data );
@@ -58,7 +64,7 @@ class Organization extends Controller
 
     function updateAppearance(Request $request)
     {
-        // dd($request->input());
+        // dd($request->file());
         $organization = Auth::guard('organization')->user();
         $organization->about_org = $request->input('about_org');
         $organization->org_phone = $request->input('org_phone');
@@ -67,6 +73,18 @@ class Organization extends Controller
         $organization->fb = $request->input('fb');
         $organization->twitter = $request->input('twitter');
         $organization->linkedin = $request->input('linkedin');
+        if ($request->file('profile_avatar') !== null && $request->file('profile_avatar')->getSize() < 2200000) {
+            Storage::delete('public/'. $organization->org_avatar_url);
+            $organization->org_avatar_url = $request->file('profile_avatar')->store('org_images', 'public');
+        }
+        if ($request->file('profile_avatar_logo') !== null && $request->file('profile_avatar_logo')->getSize() < 2200000) {
+            Storage::delete('public/'. $organization->org_long_icon_url);
+            $organization->org_long_icon_url = $request->file('profile_avatar_logo')->store('org_logo', 'public');
+        }
+        if ($request->file('profile_avatar_icon') !== null && $request->file('profile_avatar_icon')->getSize() < 2200000) {
+            Storage::delete('public/'. $organization->org_square_icon_url);
+            $organization->org_square_icon_url = $request->file('profile_avatar_icon')->store('org_icon', 'public');
+        }
         $organization->save();
         
         

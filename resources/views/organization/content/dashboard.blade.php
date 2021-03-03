@@ -13,17 +13,12 @@
 										<!--begin::Mixed Widget 2-->
 										<div class="card card-custom bg-gray-100 gutter-b card-stretch">
 											<!--begin::Header-->
-											<div class="card-header border-0 bg-primary py-5">
-												<h3 class="card-title font-weight-bolder text-white">Quick links</h3>
-												<div class="card-toolbar">
-													
-												</div>
-											</div>
+											
 											<!--end::Header-->
 											<!--begin::Body-->
 											<div class="card-body p-0 position-relative overflow-hidden">
 												<!--begin::Chart-->
-												<div id="kt_mixed_widget_2_chart" class="card-rounded-bottom bg-primary" style="height: 200px"></div>
+												<div id="" class="card-rounded-bottom bg-primary" style="height: 200px"></div>
 												<!--end::Chart-->
 												<!--begin::Stats-->
 												<div class="card-spacer mt-n25">

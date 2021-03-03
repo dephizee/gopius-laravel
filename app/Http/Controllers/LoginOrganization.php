@@ -2,19 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
-
+use App\Mail\RegistrationSuccessful;
+use App\Models\Country;
 use App\Models\Organization;
 use App\Models\OrganizationType;
-use App\Models\Country;
+use App\Models\Setting;
 use App\Models\State;
 use App\Models\VerifyOrganizationTable;
-
-use App\Mail\RegistrationSuccessful;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 
 
 class LoginOrganization extends Controller
@@ -83,6 +82,7 @@ class LoginOrganization extends Controller
 	        'about_org' => 'required|max:255',
 	        'password' => 'required',
 	    ]);
+        $domain_name = Str::random(6).'-'.Str::random(6);
         $validated['password'] = Hash::make($validated['password']);
 	    $organization = Organization::create($validated);
 	    
@@ -92,6 +92,12 @@ class LoginOrganization extends Controller
             'org_no' => $organization->org_id,
             'token' => sha1(time())
         ]);
+        $setting = Setting::create([
+                'domain_name'=>$domain_name,
+                
+                'org_no'=>$organization->org_id,
+                
+            ]);
         Mail::to($organization)->send(new RegistrationSuccessful($organization));
 	    return redirect()->route('login');
 

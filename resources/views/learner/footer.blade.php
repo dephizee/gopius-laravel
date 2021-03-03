@@ -197,6 +197,11 @@
 				</script>
 
 		        @break
+		    @case('profile')
+		    	<script src="/assets/js/learner/profile.js"></script>
+
+
+		        @break
 		
 		    @default
 		        <!--begin::Page Scripts(used by this page)-->

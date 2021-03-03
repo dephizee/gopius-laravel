@@ -8,6 +8,7 @@
 							<!--begin::Container-->
 							<div class="container">
 								<!--begin::Profile Account Information-->
+								<form method="post" enctype="multipart/form-data" >
 								<div class="d-flex flex-row">
 									<!--begin::Aside-->
 									<div class="flex-row-auto offcanvas-mobile w-250px w-xxl-350px" id="kt_profile_aside">
@@ -18,8 +19,8 @@
 												
 												<!--begin::User-->
 												<div class="d-flex align-items-center">
-													<div class="image-input image-input-outline" id="kt_profile_avatar" style="background-image: url(assets/media/users/blank.png); width: 100%;height: 160px;">
-														<div class="image-input-wrapper" style="background-image: url(assets/media/stock-600x400/img-70.jpg); width: 100%;height: 160px;"></div>
+													<div class="image-input image-input-outline symbol " id="kt_user_avatar" style="background-image: url(assets/media/stock-600x400/img-70.jpg); width: 100%;height: 160px;">
+														<div class="image-input-wrapper symbol " style="background-image: url({{ asset('files/'.Auth::guard('organization')->user()->org_avatar_url) }}); width: 100%;height: 160px;"></div>
 														<label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
 															<i class="fa fa-pen icon-sm text-muted"></i>
 															<input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg">
@@ -28,11 +29,10 @@
 														<span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="" data-original-title="Cancel avatar">
 															<i class="ki ki-bold-close icon-xs text-muted"></i>
 														</span>
-														
+														<span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="remove" data-toggle="tooltip" title="" data-original-title="Remove avatar">
+															<i class="ki ki-bold-close icon-xs text-muted"></i>
+														</span>
 													</div>
-													
-													
-													
 												</div>
 												<div class="form-text text-muted ">Allowed file types: png, jpg, jpeg.</div>
 												<!--end::User-->
@@ -120,7 +120,7 @@
 									<!--begin::Content-->
 									<div class="flex-row-fluid ml-lg-8">
 										<!--begin::Card-->
-										<form class="form" method="post">
+										
 										<div class="card card-custom">
 											<!--begin::Header-->
 											<div class="card-header py-3">
@@ -159,12 +159,15 @@
 															   
 															   <span class="form-text text-muted">Please enter your Orgnization Description ( maximum limit 100 words )</span>
 															</div>
-															<div class="image-input image-input-outline mr-5" id="kt_long_logo" >
-																<div class="image-input-wrapper" style="background-image: url(assets/media/logos/primary-logo.png); width: 180px; height: 40px;"></div>
+															
+															<div class="image-input image-input-outline mr-5" id="kt_long_logo" style="background-image: url(assets/media/logos/primary-logo.png); width: 180px; height: 40px;">
+																<div class="image-input-wrapper" id="kt_user_avatar_logo" style="background-image: url({{ asset('files/'.Auth::guard('organization')->user()->org_long_icon_url) }}); width: 180px; height: 40px;">
+																	
+																</div>
 																<label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
 																	<i class="fa fa-pen icon-sm text-muted"></i>
-																	<input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg">
-																	<input type="hidden" name="profile_avatar_remove">
+																	<input type="file" name="profile_avatar_logo" accept=".png, .jpg, .jpeg">
+																	<input type="hidden" name="profile_avatar_remove_logo">
 																</label>
 																<span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="" data-original-title="Cancel avatar">
 																	<i class="ki ki-bold-close icon-xs text-muted"></i>
@@ -173,12 +176,12 @@
 																	<i class="ki ki-bold-close icon-xs text-muted"></i>
 																</span>
 															</div><br>
-															<div class="image-input image-input-outline " id="kt_square_logo" >
-																<div class="image-input-wrapper" style="background-image: url(assets/media/logos/favicon.png); width: 40px; height: 40px;"></div>
+															<div class="image-input image-input-outline " id="kt_square_logo" style="background-image: url(assets/media/logos/favicon.png); width: 40px; height: 40px;">
+																<div class="image-input-wrapper" style="background-image: url({{ asset('files/'.Auth::guard('organization')->user()->org_square_icon_url) }}); width: 40px; height: 40px;"></div>
 																<label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
 																	<i class="fa fa-pen icon-sm text-muted"></i>
-																	<input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg">
-																	<input type="hidden" name="profile_avatar_remove">
+																	<input type="file" name="profile_avatar_icon" accept=".png, .jpg, .jpeg">
+																	<input type="hidden" name="profile_avatar_remove_icon">
 																</label>
 																<span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="cancel" data-toggle="tooltip" title="" data-original-title="Cancel avatar">
 																	<i class="ki ki-bold-close icon-xs text-muted"></i>
@@ -255,11 +258,12 @@
 											
 											<!--end::Form-->
 										</div>
-										</form>
+										
 										<!--end::Card-->
 									</div>
 									<!--end::Content-->
 								</div>
+								</form>
 								<!--end::Profile Account Information-->
 							</div>
 							<!--end::Container-->

@@ -190,6 +190,11 @@
 				<script src="/assets/js/build_quiz.js"></script>
 
 		        @break
+		    @case('profile')
+		    	<script src="/assets/js/instructor/profile.js"></script>
+
+
+		        @break
 		
 		    @default
 		        <!--begin::Page Scripts(used by this page)-->
@@ -198,6 +203,8 @@
 		@endswitch
 		
 		
+
+
 	</body>
 	<!--end::Body-->
 </html>

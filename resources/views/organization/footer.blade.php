@@ -35,7 +35,15 @@
 		<script src="/assets/plugins/custom/fullcalendar/fullcalendar.bundle.js"></script>
 		<!--end::Page Vendors-->
 		@switch($view)
-		    @case('instructorss--')
+			@case('settings')
+		        <!--begin::Page Scripts(used by this page)-->
+				
+				<!--end::Page Scripts-->
+				<script src="/assets/js/profile.js"></script>
+				
+
+		        @break
+		    @case('instructors--')
 		        <!--begin::Page Scripts(used by this page)-->
 				<script src="/assets/js/pages/instructor-learner.js"></script>
 				<!--end::Page Scripts-->

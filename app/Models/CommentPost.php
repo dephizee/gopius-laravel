@@ -25,4 +25,15 @@ class CommentPost extends Model
     	// belongsTo(RelatedModel, foreignKey = instructor_id, keyOnRelatedModel = id)
     	return $this->belongsTo(Instructor::class, 'instr_no');
     }
+
+    /**
+     * CommentPost belongs to Learner.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsTo
+     */
+    public function learner()
+    {
+        // belongsTo(RelatedModel, foreignKey = learner_id, keyOnRelatedModel = id)
+        return $this->belongsTo(Learner::class, 'learner_no');
+    }
 }

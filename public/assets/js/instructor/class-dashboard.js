@@ -222,10 +222,9 @@ var loadPost = (post)=>{
                     <!--begin::Header-->
                     <div class="d-flex align-items-center">
                         <!--begin::Symbol-->
-                        <div class="symbol symbol-40 symbol-light-success mr-5">
-                            <span class="symbol-label">
-                                <img src="/assets/media/svg/avatars/018-girl-9.svg" class="h-75 align-self-end" alt="" />
-                            </span>
+                        <div class="image-input image-input-outline " style="background-image: url('/assets/media/users/blank.png'); width: 40px; height: 40px;">
+                            
+                            <div class="image-input-wrapper" style="background-image: url(${user_img_path}); width: 40px; height: 40px;"></div>
                         </div>
                         <!--end::Symbol-->
                         <!--begin::Info-->
@@ -294,10 +293,9 @@ var loadPost = (post)=>{
 var loadComment = (comment_post, target)=>{
     console.log(comment_post);
     var block_ = `  <!--begin::Symbol-->
-                    <div class="symbol symbol-40 symbol-light-success mr-5 mt-1">
-                        <span class="symbol-label">
-                            <img src="/assets/media/svg/avatars/009-boy-4.svg" class="h-75 align-self-end" alt="" />
-                        </span>
+                    <div class="image-input image-input-outline " style="background-image: url('/assets/media/users/blank.png'); width: 40px; height: 40px;">
+                        
+                        <div class="image-input-wrapper" style="background-image: url(${user_img_path}); width: 40px; height: 40px;"></div>
                     </div>
                     <!--end::Symbol-->
                     <!--begin::Info-->

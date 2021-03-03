@@ -21,10 +21,14 @@
 														<!--begin::Header-->
 														<div class="d-flex flex-column flex-center">
 															<!--begin::Image-->
-															<div class="bgi-no-repeat bgi-size-cover rounded min-h-180px w-100" style="background-image: url(/assets/media/stock-600x400/img-70.jpg)"></div>
+															<div class="symbol symbol-100 symbol-light-primary mr-2">
+																<span class="symbol-label font-size-h5 font-weight-bolder text-primary ">
+																	{{strtoupper(substr(explode(' ', $class->cat_title)[0]??'', 0,1))}}{{strtoupper(substr(explode(' ', $class->cat_title)[1]??'', 0,1))}}
+																</span>
+															</div>
 															<!--end::Image-->
 															<!--begin::Title-->
-															<a href="#" class="card-title font-weight-bolder text-dark-75 text-hover-primary font-size-h4 m-0 pt-7 pb-1">{{$class->cat_title}}</a>
+															<a class="card-title font-weight-bolder text-dark-75 text-hover-primary font-size-h4 m-0 pt-7 pb-1">{{$class->cat_title}}</a>
 															<!--end::Title-->
 															<span class="font-weight-bolder label label-xl label-secondary label-inline px-3 py-5 min-w-45px mb-2">Class Code: {{$class->cat_code}}</span>
 															<!--begin::Text-->
@@ -58,7 +62,7 @@
 																<!--end::Symbol-->
 																<!--begin::Text-->
 																<div class="d-flex flex-column flex-grow-1">
-																	<a href="#" class="text-dark-75 text-hover-primary mb-1 font-size-lg font-weight-bolder">Instructors</a>
+																	<a  class="text-dark-75 text-hover-primary mb-1 font-size-lg font-weight-bolder">Instructors</a>
 																	
 																</div>
 																<!--end::Text-->
@@ -88,7 +92,7 @@
 																<!--end::Symbol-->
 																<!--begin::Text-->
 																<div class="d-flex flex-column flex-grow-1">
-																	<a href="#" class="text-dark-75 text-hover-primary mb-1 font-size-lg font-weight-bolder">Courses</a>
+																	<a class="text-dark-75 text-hover-primary mb-1 font-size-lg font-weight-bolder">Courses</a>
 																	
 																</div>
 																<!--end::Text-->
@@ -129,13 +133,13 @@
 														<div class="d-flex align-items-center mb-8">
 															<!--begin::Symbol-->
 															<div class="symbol mr-5 pt-1">
-																<div class="symbol-label min-w-65px min-h-100px" style="background-image: url({{asset('files/'.$course->course_cover_img_url)}})"></div>
+																<div class="symbol-label min-w-65px min-h-100px" style="background-image: url({{asset('storage/'.$course->course_cover_img_url)}})"></div>
 															</div>
 															<!--end::Symbol-->
 															<!--begin::Info-->
 															<div class="d-flex flex-column">
 																<!--begin::Title-->
-																<a href="#" class="text-dark-75 font-weight-bolder text-hover-primary font-size-lg">{{$course->course_title}}</a>
+																<a href="{{ route('learner_class_course', [$class->cat_id, $course->course_id]) }}" class="text-dark-75 font-weight-bolder text-hover-primary font-size-lg">{{$course->course_title}}</a>
 																<!--end::Title-->
 																<!--begin::Text-->
 																<span class="text-muted font-weight-bold font-size-sm pb-4">{{$course->course_desc}}</span>
@@ -198,7 +202,8 @@
 																			<td class="m-0 p-0">
 																				<div class="symbol symbol-45 symbol-light-danger mr-2">
 																					<span class="symbol-label font-size-h5 font-weight-bolder text-danger ">
-																						{{strtoupper(substr($poll->poll_title, 0,1))}}
+																						
+																						{{strtoupper(substr(explode(' ', $poll->poll_title)[0]??'', 0,1))}}{{strtoupper(substr(explode(' ', $poll->poll_title)[1]??'', 0,1))}}
 																					</span>
 																				</div>
 																			</td>
@@ -268,9 +273,9 @@
 															<div class="d-flex align-items-center">
 																<!--begin::Symbol-->
 																<div class="symbol symbol-40 symbol-light-success mr-5">
-																	<span class="symbol-label">
-																		<img src="/assets/media/svg/avatars/007-boy-2.svg" class="h-75 align-self-end" alt="" />
-																	</span>
+																	<div class="image-input image-input-outline symbol symbol-circle" >
+																		<div class="image-input-wrapper symbol " style="background-image: url({{ asset('storage/'.Auth::guard('learner')->user()->learner_avatar_url) }}), url('/assets/media/users/blank.png'); width: 50px; height: 50px;"></div>
+																	</div>
 																</div>
 																<!--end::Symbol-->
 																<!--begin::Description-->
@@ -338,16 +343,17 @@
 																<!--begin::Header-->
 																<div class="d-flex align-items-center">
 																	<!--begin::Symbol-->
-																	<div class="symbol symbol-40 symbol-light-success mr-5">
-																		<span class="symbol-label">
-																			<img src="/assets/media/svg/avatars/018-girl-9.svg" class="h-75 align-self-end" alt="" />
-																		</span>
+																	<div class="image-input image-input-outline " style="background-image: url('/assets/media/users/blank.png'); width: 40px; height: 40px;">
+																		@php
+																			$user_img_path = $post->post_instructor->instructor->instr_avatar_url??$post->post_learner->learner->learner_avatar_url??'';
+																		@endphp
+																		<div class="image-input-wrapper" style="background-image: url({{ asset('storage/'.$user_img_path) }}); width: 40px; height: 40px;"></div>
 																	</div>
 																	<!--end::Symbol-->
 																	<!--begin::Info-->
 																	<div class="d-flex flex-column flex-grow-1">
 																		<span>
-																			<a href="#" class="text-dark-75 text-hover-primary mb-1 font-size-lg font-weight-bolder">{{$post->post_instructor->instructor->instr_name??$post->post_learner->learner->learner_name??''}}</a>
+																			<a class="text-dark-75 text-hover-primary mb-1 font-size-lg font-weight-bolder">{{$post->post_instructor->instructor->instr_name??$post->post_learner->learner->learner_name??''}}</a>
 																			posted in
 																			<a class="text-dark-75 text-hover-primary mb-1 font-size-lg font-weight-bolder"> {{$post->class->cat_title}} </a>
 																			class
@@ -361,7 +367,7 @@
 																<!--begin::Body-->
 																<div class="pt-5">
 																	@foreach ($post->attachments as $attachment)
-																		<div class=" mt-2 bgi-no-repeat bgi-size-cover rounded min-h-265px" style="background-image: url({{ asset('files/'.$attachment->url) }})"></div>
+																		<div class=" mt-2 bgi-no-repeat bgi-size-cover rounded min-h-265px" style="background-image: url({{ asset('storage/'.$attachment->url) }})"></div>
 																	@endforeach
 																	<!--begin::Text-->
 																	<p class="text-dark-75 font-size-lg font-weight-normal mb-2"><?=$post->content?></p>
@@ -373,13 +379,13 @@
 																		<div class="d-flex align-items-center mb-8">
 																			<!--begin::Symbol-->
 																			<div class="symbol mr-5 pt-1">
-																				<div class="symbol-label min-w-65px min-h-100px" style="background-image: url({{ asset('files/'.$course->course_cover_img_url) }})"></div>
+																				<div class="symbol-label min-w-65px min-h-100px" style="background-image: url({{ asset('storage/'.$course->course_cover_img_url) }})"></div>
 																			</div>
 																			<!--end::Symbol-->
 																			<!--begin::Info-->
 																			<div class="d-flex flex-column">
 																				<!--begin::Title-->
-																				<a href="#" class="text-dark-75 font-weight-bolder text-hover-primary font-size-lg">{{$course->course_title}}</a>
+																				<a href="{{ route('learner_class_course', [$class->cat_id, $course->course_id]) }}" class="text-dark-75 font-weight-bolder text-hover-primary font-size-lg">{{$course->course_title}}</a>
 																				<!--end::Title-->
 																				<!--begin::Text-->
 																				<span class="text-muted font-weight-bold font-size-sm pb-4">{{$course->course_desc}}</span>
@@ -405,7 +411,7 @@
 																			</span>
 																		</div>
 																		<div class="col-7">
-																			<a href="#" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{$poll->poll_title}}</a>
+																			<a href="{{ route('learner_class_poll', [$class->cat_id, $poll->poll_id]) }}" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{$poll->poll_title}}</a>
 																			<span class="text-muted font-weight-bold d-block">by {{$poll->instructor->instr_name}}</span>
 																		</div>
 																		<div class="col-2">
@@ -431,7 +437,7 @@
 																			</span>
 																		</div>
 																		<div class="col-4">
-																			<a href="#" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{$assignment->ass_title}}</a>
+																			<a href="{{ route('learner_class_assignment', [$class->cat_id, $assignment->ass_id]) }}" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{$assignment->ass_title}}</a>
 																			<span class="text-muted font-weight-bold d-block">by {{$assignment->instructor->instr_name}}</span>
 
 																		</div>
@@ -463,7 +469,7 @@
 																			</span>
 																		</div>
 																		<div class="col-4">
-																			<a href="#" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{$quiz->quiz_title}}</a>
+																			<a href="{{ route('learner_class_quiz', [$class->cat_id, $quiz->quiz_id]) }}" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{$quiz->quiz_title}}</a>
 																			<span class="text-muted font-weight-bold d-block">by {{$quiz->instructor->instr_name}}</span>
 
 																		</div>
@@ -501,17 +507,18 @@
 																			<!--begin::Item-->
 																			<div class="d-flex py-5">
 																				<!--begin::Symbol-->
-																				<div class="symbol symbol-40 symbol-light-success mr-5 mt-1">
-																					<span class="symbol-label">
-																						<img src="/assets/media/svg/avatars/009-boy-4.svg" class="h-75 align-self-end" alt="" />
-																					</span>
+																				<div class="image-input image-input-outline " style="background-image: url('/assets/media/users/blank.png'); width: 40px; height: 40px;">
+																					@php
+																						$user_img_path = $comment->instructor->instr_avatar_url??$comment->learner->learner_avatar_url??'';
+																					@endphp
+																					<div class="image-input-wrapper" style="background-image: url({{ asset('storage/'.$user_img_path) }}); width: 40px; height: 40px;"></div>
 																				</div>
 																				<!--end::Symbol-->
 																				<!--begin::Info-->
 																				<div class="d-flex flex-column flex-row-fluid">
 																					<!--begin::Info-->
 																					<div class="d-flex align-items-center flex-wrap">
-																						<a href="#" class="text-dark-75 text-hover-primary mb-1 font-size-lg font-weight-bolder pr-6">{{$comment->instructor->instr_name??$comment->learner->learner_name??''}}</a>
+																						<a class="text-dark-75 text-hover-primary mb-1 font-size-lg font-weight-bolder pr-6">{{$comment->instructor->instr_name??$comment->learner->learner_name??''}}</a>
 																						<span class="text-muted font-weight-normal flex-grow-1 font-size-sm">{{$comment->created_at->diffForHumans()}}</span>
 																						
 																					</div>
@@ -598,13 +605,13 @@
 																					<td class="m-0 p-0">
 																						<div class="symbol symbol-45 symbol-light-warning mr-2">
 																							<span class="symbol-label font-size-h5 font-weight-bolder text-warning">
-																								{{strtoupper(substr($assignment->ass_title, 0,1))}}
+																								{{strtoupper(substr(explode(' ', $assignment->ass_title)[0]??'', 0,1))}}{{strtoupper(substr(explode(' ', $assignment->ass_title)[1]??'', 0,1))}}
 																							</span>
 																						</div>
 																					</td>
 																					<td class="pl-0">
-																						<a href="#" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{$assignment->course_title}} Assignment</a>
-																						<span class="text-muted font-weight-bold d-block">by {{$assignment->instr_name}}</span>
+																						<a href="{{ route('learner_class_assignment', [$class->cat_id, $assignment->ass_id]) }}" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{$assignment->course_title}} </a>
+																						<span class="text-muted font-weight-bold d-block">by {{$assignment->instr_name}}</span> in {{$assignment->course_title}}
 																					</td>
 																					<td></td>
 																					<td class="text-left">
@@ -690,12 +697,12 @@
 																					<td class="m-0 p-0">
 																						<div class="symbol symbol-45 symbol-light-primary mr-2">
 																							<span class="symbol-label font-size-h5 font-weight-bolder text-primary">
-																								{{strtoupper(substr($quiz->quiz_title, 0,1))}}
+																								{{strtoupper(substr(explode(' ', $quiz->quiz_title)[0]??'', 0,1))}}{{strtoupper(substr(explode(' ', $quiz->quiz_title)[1]??'', 0,1))}}
 																							</span>
 																						</div>
 																					</td>
 																					<td class="pl-0">
-																						<a href="#" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{$quiz->quiz_title}}</a>
+																						<a href="{{ route('learner_class_quiz', [$class->cat_id, $quiz->quiz_id]) }}" class="text-dark-75 font-weight-bolder text-hover-primary mb-1 font-size-lg">{{$quiz->quiz_title}}</a>
 																						<span class="text-muted font-weight-bold d-block">by {{$quiz->instr_name}}</span>
 																					</td>
 																					<td></td>
@@ -756,4 +763,7 @@
 						<!--end::Entry-->
 						<!--end::Entry-->
 					</div>
+					<script type="text/javascript">
+						var user_img_path = '{{ asset('storage/'.Auth::guard('learner')->user()->learner_avatar_url) }}';
+					</script>
 					<!--end::Content-->

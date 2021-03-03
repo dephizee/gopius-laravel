@@ -2,29 +2,25 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\SendLearnerLogin;
+use App\Models\Assignment;
+use App\Models\Category;
+use App\Models\ClassInstructor;
+use App\Models\ClassLearner;
+use App\Models\CommentPost;
+use App\Models\Course;
+use App\Models\Learner;
+use App\Models\Poll;
+use App\Models\Post;
+use App\Models\PostAttachment;
+use App\Models\PostLearner;
+use App\Models\PostLike;
+use App\Models\Quiz;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
-
-use App\Models\Category;
-use App\Models\Learner;
-use App\Models\Poll;
-use App\Models\Course;
-use App\Models\Quiz;
-use App\Models\Assignment;
-use App\Models\ClassLearner;
-use App\Models\ClassInstructor;
-use App\Models\Post;
-use App\Models\PostLearner;
-use App\Models\PostAttachment;
-use App\Models\CommentPost;
-use App\Models\PostLike;
-
-use App\Mail\SendLearnerLogin;
-
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class LearnerController extends Controller
@@ -105,10 +101,17 @@ class LearnerController extends Controller
             $learner->learner_email = $validated['learner_email'];
         }
         
+
         
         $learner->learner_name = $validated['learner_name'];
         
         $learner->learner_phone = $validated['learner_phone'];
+
+        if ($request->file('profile_avatar') !== null && $request->file('profile_avatar')->getSize() < 2200000) {
+            
+            Storage::delete('public/'. $learner->learner_avatar_url);
+            $learner->learner_avatar_url = $request->file('profile_avatar')->store('learner_images', 'public');
+        }
         $learner->save();
         
         return redirect()->route('learner_profile');
@@ -212,7 +215,7 @@ class LearnerController extends Controller
 
     function learnerPolls()
     {
-        $data['assignment'] = 'active';
+        $data['poll'] = 'active';
         $data['header'] = 'course';
         $data['view'] = 'polls';
         $data['polls']  = Poll::leftJoin('categories', 'polls.cat_no', '=', 'categories.cat_id')
