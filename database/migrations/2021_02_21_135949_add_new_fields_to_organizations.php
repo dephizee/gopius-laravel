@@ -14,9 +14,9 @@ class AddNewFieldsToOrganizations extends Migration
     public function up()
     {
         Schema::table('organizations', function (Blueprint $table) {
-            $table->string('org_size');
-            $table->string('org_priority');
-            $table->string('org_why');
+            $table->string('org_size')->default('');
+            $table->string('org_priority')->default('');
+            $table->string('org_why')->default('');
             $table->string('org_phone')->nullable();
             $table->string('homepage')->nullable();
             $table->string('website')->nullable();
