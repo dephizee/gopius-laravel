@@ -10,7 +10,7 @@ use App\Models\Category;
 
 class ChapterController extends Controller
 {
-    function addChapter(Category $class, Course $course, $chapter_name)
+    function addChapter($account, Category $class, Course $course, $chapter_name)
     {
         // var_dump($chapter_name);die();
         if (isset($chapter_name)) {
@@ -22,14 +22,14 @@ class ChapterController extends Controller
         
         return redirect()->route('instructor_course_build_all_chapters', [$class->cat_id, $course->course_id,]);
     }
-    function deleteChapter(Category $class, $course_id, Chapter $chapter)
+    function deleteChapter($account, Category $class, $course_id, Chapter $chapter)
     {
         // $chapter  = Chapter::destroy($chapter_id);
         $chapter->delete();
         
         return redirect()->route('instructor_course_build_all_chapters', [$class->cat_id, $course_id,]);
     }
-    function allChapter(Category $class, $course_id)
+    function allChapter($account, Category $class, $course_id)
     {
         $chapters  = Chapter::get()->where("course_no", $course_id);
         foreach ($chapters as $key => $chapter) {

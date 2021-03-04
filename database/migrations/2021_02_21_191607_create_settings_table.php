@@ -19,7 +19,7 @@ class CreateSettingsTable extends Migration
             $table->string('color')->nullable();
             $table->text('css')->nullable();
             $table->text('js')->nullable();
-            $table->string('domain_name')->nullable();
+            $table->string('domain_name')->unique();
             $table->unsignedBigInteger('org_no')->unique();
             $table->timestamps();
             $table->foreign('org_no')->references('org_id')->on('organizations');

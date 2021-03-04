@@ -2,7 +2,7 @@
 	<!--begin::Head-->
 	<head><base href="">
 		<meta charset="utf-8" />
-		<title>Login Page | Go pius</title>
+		<title>Login Instructor | Go pius</title>
 		<meta name="description" content="Login page example" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 		<link rel="canonical" href="https://keenthemes.com/metronic" />
@@ -48,8 +48,8 @@
 									<!--begin::Title-->
 									<div class="text-center pb-8">
 										<h2 class="font-weight-bolder text-dark font-size-h2 font-size-h1-lg">Sign In</h2>
-										<span class="text-muted font-weight-bold font-size-h4">Or
-										<a href="/register" class="text-primary font-weight-bolder">Create An Account</a></span>
+										<span class="text-muted font-weight-bold font-size-h4">In 
+										<a class="text-primary font-weight-bolder">{{$setting->organization->org_name}}</a></span>
 									</div>
 									<!--end::Title-->
 									<!--begin::Form group-->

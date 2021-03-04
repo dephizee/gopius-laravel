@@ -11,7 +11,7 @@ use App\Models\Category;
 
 class BlockController extends Controller
 {
-    function addBlock(Category $class, $course_id, $chapter_id, $block_name)
+    function addBlock($accout, Category $class, $course_id, $chapter_id, $block_name)
     {
         $chapter  = Chapter::findOrFail($chapter_id);
         // var_dump($chapter_name);die();
@@ -24,7 +24,7 @@ class BlockController extends Controller
         
         return redirect()->route('instructor_course_build_all_chapter_blocks', [$class->cat_id, $course_id,$chapter_id]);
     }
-    function deleteBlock(Category $class, $course_id, $block_id)
+    function deleteBlock($accout, Category $class, $course_id, $block_id)
     {
     	$block  = Block::findOrFail($block_id);
     	$chapter_no = $block->chapter_no;
@@ -32,7 +32,7 @@ class BlockController extends Controller
         
         return redirect()->route('instructor_course_build_all_chapter_blocks', [$class->cat_id, $course_id, $chapter_no]);
     }
-    function updateBlockContent(Request $request, Category $class, $course_id, $block_id)
+    function updateBlockContent($account, Request $request, Category $class, $course_id, $block_id)
     {
     	$block  = Block::findOrFail($block_id);
     	$block->block_content = $request->input("block_content");
@@ -41,7 +41,7 @@ class BlockController extends Controller
         
         return redirect()->route('instructor_course_build_all_chapter_blocks', [$class->cat_id, $course_id, $chapter_no]);
     }
-    function allBlocks(Category $class, $course_id, $chapter_id)
+    function allBlocks($accout, Category $class, $course_id, $chapter_id)
     {
         $blocks  = Block::get()->where("chapter_no", $chapter_id)->values();
        

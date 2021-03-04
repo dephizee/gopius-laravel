@@ -135,6 +135,10 @@ class Organization extends Controller
     {
         $setting = Setting::where('org_no', Auth::guard('organization')->user()->org_id)->first();
         if ($setting == null) {
+            $validated = $request->validate([
+                
+                'domain_name' => 'required|unique:settings,domain_name',
+            ]);
             $setting = Setting::create([
                 'domain_name'=>$request->input('domain_name'),
                 

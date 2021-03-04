@@ -2,15 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Setting;
 use Illuminate\Http\Request;
-
 use Illuminate\Support\Facades\Auth;
 
 class LoginLearnerController extends Controller
 {
-	public function index(Request $request)
+	public function index(Request $request, $account)
     {
-    	return view('learner.login');
+        $data['setting'] = Setting::where('domain_name', $account)->firstOrFail();
+    	return view('learner.login', $data);
     }
     function processLogin(Request $request)
     {

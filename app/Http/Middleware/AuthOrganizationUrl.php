@@ -2,12 +2,12 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\Setting;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\URL;
 
-use Illuminate\Support\Facades\Auth;
-
-class AuthInstructorLogin
+class AuthOrganizationUrl
 {
     /**
      * Handle an incoming request.
@@ -19,9 +19,12 @@ class AuthInstructorLogin
     public function handle(Request $request, Closure $next)
     {
         $account = $request->route('account');
-        if (Auth::guard('instructor')->check() ) {
-            return redirect()->route('instructor_dashboard', [$account]);
-        }
+        $setting = Setting::where('domain_name', $account)->firstOrFail();
+        URL::defaults(['account' => $account]);
+
+        // Organization::find();
+        // dd($setting);
+        
         return $next($request);
     }
 }

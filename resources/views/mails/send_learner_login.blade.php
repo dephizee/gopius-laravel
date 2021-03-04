@@ -10,7 +10,7 @@ password: {{$learner->open_password}}<br>
 @endcomponent
 
 
-@component('mail::button', ['url' => route('learner_login'), 'color'=>'success'])
+@component('mail::button', ['url' => route('learner_login',[Auth::guard('organization')->user()->setting->domain_name]), 'color'=>'success'])
 Click to login
 @endcomponent
 

@@ -22,7 +22,7 @@ use App\Models\QuizPost;
 class QuizController extends Controller
 {
 
-    function learnerClassQuiz(Request $request, Category $class, Quiz $quiz)
+    function learnerClassQuiz($account, Request $request, Category $class, Quiz $quiz)
     {
         
 
@@ -41,7 +41,7 @@ class QuizController extends Controller
         return view('learner.dashboard',  $data );
     }
 
-    function learnerSubmitClassQuiz(Request $request, Category $class, Quiz $quiz)
+    function learnerSubmitClassQuiz($account, Request $request, Category $class, Quiz $quiz)
     {
         
         $questions  = $request->input('questions');
@@ -67,14 +67,14 @@ class QuizController extends Controller
 
 
 
-	function instructorQuizzes(Request $request)
+	function instructorQuizzes()
     {
         $data['view'] = 'quizzes';
         $data['header'] = 'course';
         $data['quiz'] = 'active';
         return view('instructor.dashboard',  $data );
     }
-    function viewAllQuizSubmissions(Category $class, Quiz $quiz)
+    function viewAllQuizSubmissions($account, Category $class, Quiz $quiz)
     {
         if ($quiz->instructor->instr_id != Auth::guard('instructor')->user()->instr_id) {
             return abort(401);
@@ -88,7 +88,7 @@ class QuizController extends Controller
         return view('instructor.dashboard',  $data );
     }
 
-    function viewSubmission(Category $class, Quiz $quiz, Learner $learner)
+    function viewSubmission($account, Category $class, Quiz $quiz, Learner $learner)
     {
         if ($quiz->instructor->instr_id != Auth::guard('instructor')->user()->instr_id) {
             return abort(401);
@@ -109,14 +109,14 @@ class QuizController extends Controller
         // $data['categories']  = Category::cursor();
         return view('instructor.dashboard',  $data );
     }
-    function submissionStatus(Category $class, Quiz $quiz, LearnerQuizOption $learner_quiz_option, $status)
+    function submissionStatus($account, Category $class, Quiz $quiz, LearnerQuizOption $learner_quiz_option, $status)
     {
         
         $learner_quiz_option->status = $status;
         $learner_quiz_option->save(); 
         return redirect()->back();
     }
-    function newQuiz(Category $class)
+    function newQuiz($account, Category $class)
     {
         // $data['dashboard'] = 'add_course';
         $data['header'] = 'class';
@@ -126,7 +126,7 @@ class QuizController extends Controller
         return view('instructor.dashboard',  $data );
     }
 
-    function processNewQuiz(Request $request, Category $class)
+    function processNewQuiz($account, Request $request, Category $class)
     {
         // var_dump($_POST);die();
         $validated = $request->validate([
@@ -157,7 +157,7 @@ class QuizController extends Controller
         return redirect()->route('instructor_quiz_build', [$class->cat_id, $quiz->quiz_id]);
     }
 
-    function buildQuiz(Request $request, Category $class, Quiz $quiz)
+    function buildQuiz($account, Request $request, Category $class, Quiz $quiz)
     {
         // $course  = Course::findOrFail($course_id);
         // var_dump($course->course_title);die();
@@ -169,7 +169,7 @@ class QuizController extends Controller
         $data['upload_link']  = $request->url().'/upload';
         return view('instructor.dashboard',  $data );
     }
-    function processBuiltQuiz(Request $request, Category $class, Quiz $quiz)
+    function processBuiltQuiz($account, Request $request, Category $class, Quiz $quiz)
     {
         
         $validated = $request->validate([
@@ -206,7 +206,7 @@ class QuizController extends Controller
         return response()->json( $quizzes->toArray() )->header('Content-Type', 'application/json');
     }
 
-    function getAllSubmittedQuizzes(Category $class, Quiz $quiz)
+    function getAllSubmittedQuizzes($account, Category $class, Quiz $quiz)
     {
         DB::statement("set sql_mode = ''");
         $quizzes  = LearnerQuizOption::

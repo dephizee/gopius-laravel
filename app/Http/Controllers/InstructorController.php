@@ -168,7 +168,7 @@ class InstructorController extends Controller
     }
 
 
-    function instructorClass(Category $class)
+    function instructorClass($account, Category $class)
     {
         $data['header'] = 'class';
         $data['view'] = 'class-dashboard';
@@ -246,7 +246,7 @@ class InstructorController extends Controller
         return response()->json( $classes->toArray() )->header('Content-Type', 'application/json');
     }
 
-    function instructorUploadClassPost(Request $request, Category $class)
+    function instructorUploadClassPost(Request $request, $accout, Category $class)
     {
         $validated = $request->validate([
             
@@ -276,7 +276,7 @@ class InstructorController extends Controller
         return response()->json( ['status'=>true, 'post'=>$post] )->header('Content-Type', 'application/json');
     }
 
-    function instructorUploadClassPostComment(Request $request, Category $class)
+    function instructorUploadClassPostComment(Request $request, $accout, Category $class)
     {
         $validated = $request->validate([
             'content' => 'required',
@@ -290,7 +290,7 @@ class InstructorController extends Controller
         $comment_post->date = $comment_post->created_at->diffForHumans();
         return response()->json( ['status'=>true, 'comment_post'=>$comment_post, 'comment_post_count'=>CommentPost::where('post_no', $validated['post_no'] )->count() ] )->header('Content-Type', 'application/json');
     }
-    function instructorUploadClassPostLike(Request $request, Category $class)
+    function instructorUploadClassPostLike(Request $request, $account, Category $class)
     {
         $validated = $request->validate([
             'post_no' => 'required',

@@ -75,5 +75,6 @@ class Kernel extends HttpKernel
         'quiz_learner_access' => \App\Http\Middleware\QuizLearnerAccess::class,
         'assignment_learner_access' => \App\Http\Middleware\AssignmentLearnerAccess::class,
         'course_learner_access' => \App\Http\Middleware\CourseLearnerAccess::class,
+        'auth_domain' => \App\Http\Middleware\AuthOrganizationUrl::class,
     ];
 }

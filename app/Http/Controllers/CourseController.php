@@ -22,7 +22,7 @@ class CourseController extends Controller
 {
 
 
-    function learnerClassCourse(Category $class, Course $course)
+    function learnerClassCourse($account, Category $class, Course $course)
     {
         $data['header'] = 'class';
         $data['view'] = 'intro-to-course';
@@ -32,7 +32,7 @@ class CourseController extends Controller
         $data['course'] = $course;
         return view('learner.dashboard',  $data );
     }
-    function learnerClassCourseLearn(Category $class, Course $course)
+    function learnerClassCourseLearn($account, Category $class, Course $course)
     {
         $data['header'] = 'class';
         $data['view'] = 'learn-course';
@@ -42,7 +42,7 @@ class CourseController extends Controller
         $data['course'] = $course;
         return view('learner.dashboard',  $data );
     }
-    function learnerClassCourseLearnTicked(Category $class, Course $course, Block $block)
+    function learnerClassCourseLearnTicked($account, Category $class, Course $course, Block $block)
     {
         $bl = BlockLearner::firstOrNew([
             'block_no'=>$block->block_id,
@@ -65,7 +65,7 @@ class CourseController extends Controller
 
 
 
-    function newCourse(Category $class)
+    function newCourse($account, Category $class)
     {
         $data['dashboard'] = 'add_course';
         $data['header'] = 'class';
@@ -74,7 +74,7 @@ class CourseController extends Controller
         // $data['categories']  = Category::cursor();
         return view('instructor.dashboard',  $data );
     }
-    function buildCourse(Category $class, Course $course)
+    function buildCourse($account, Category $class, Course $course)
     {
         // $course  = Course::findOrFail($course_id);
         // var_dump($course->course_title);die();
@@ -85,7 +85,7 @@ class CourseController extends Controller
         $data['categories']  = Category::cursor();
         return view('instructor.dashboard',  $data );
     }
-    function processNewCourse(Request $request, Category $class)
+    function processNewCourse($account, Request $request, Category $class)
     {
         // var_dump($_POST);die();
         $validated = $request->validate([
@@ -134,14 +134,14 @@ class CourseController extends Controller
     }
 
    
-    function allCourse(Request $request)
+    function allCourse()
     {
         $courses  = Course::leftJoin('categories', 'courses.cat_no', '=', 'categories.cat_id')
         			->leftJoin('classes_instructors', 'categories.cat_id', '=', 'classes_instructors.cat_no')
         			->where('classes_instructors.instr_no', Auth::guard('instructor')->user()->instr_id)->get();
         return response()->json( $courses->toArray() )->header('Content-Type', 'application/json');
     }
-    function updateCourse(Request $request, Course $course)
+    function updateCourse($account, Request $request, Course $course)
     {
         // dd($request->input());
         $validated = $request->validate([
@@ -157,7 +157,7 @@ class CourseController extends Controller
         $course->save();
         return response()->json( $course->toArray() )->header('Content-Type', 'application/json');
     }
-    function deleteCourse(Request $request, Course $course)
+    function deleteCourse($account, Request $request, Course $course)
     {
         
         $course->delete();

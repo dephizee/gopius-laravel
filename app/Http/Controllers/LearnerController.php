@@ -116,7 +116,7 @@ class LearnerController extends Controller
         
         return redirect()->route('learner_profile');
     }
-    function learnerClasses(Category $class)
+    function learnerClasses($account, Category $class)
     {
         $data['class'] = 'active';
         $data['header'] = 'class';
@@ -186,7 +186,7 @@ class LearnerController extends Controller
         return response()->json( $classes->toArray() )->header('Content-Type', 'application/json');
     }
 
-    function learnerClass(Category $class)
+    function learnerClass($account, Category $class)
     {
         $data['header'] = 'class';
         $data['view'] = 'class-dashboard';
@@ -326,7 +326,7 @@ class LearnerController extends Controller
         return redirect()->route('learner_login');
     }
 
-     function learnerUploadClassPost(Request $request, Category $class)
+     function learnerUploadClassPost(Request $request, $account, Category $class)
     {
         $validated = $request->validate([
             
@@ -356,7 +356,7 @@ class LearnerController extends Controller
         return response()->json( ['status'=>true, 'post'=>$post] )->header('Content-Type', 'application/json');
     }
 
-    function learnerUploadClassPostComment(Request $request, Category $class)
+    function learnerUploadClassPostComment(Request $request, $account, Category $class)
     {
         $validated = $request->validate([
             'content' => 'required',
@@ -370,7 +370,7 @@ class LearnerController extends Controller
         $comment_post->date = $comment_post->created_at->diffForHumans();
         return response()->json( ['status'=>true, 'comment_post'=>$comment_post, 'comment_post_count'=>CommentPost::where('post_no', $validated['post_no'] )->count() ] )->header('Content-Type', 'application/json');
     }
-    function learnerUploadClassPostLike(Request $request, Category $class)
+    function learnerUploadClassPostLike(Request $request, $account, Category $class)
     {
         $validated = $request->validate([
             'post_no' => 'required',

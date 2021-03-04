@@ -23,7 +23,7 @@
 														<div class="d-flex flex-column flex-center">
 															<!--begin::Symbol-->
 															<div class="image-input image-input-outline symbol symbol-circle" >
-																<div class="image-input-wrapper symbol symbol-circle " style="background-image: url({{ asset('storage/'.Auth::guard('learner')->user()->learner_avatar_url) }}), url('assets/media/svg/avatars/007-boy-2.svg')"></div>
+																<div class="image-input-wrapper symbol symbol-circle " style="background-image: url({{ asset('storage/'.Auth::guard('learner')->user()->learner_avatar_url) }}), url('/assets/media/users/blank.png')"></div>
 															</div>
 															<!--end::Symbol-->
 															<!--begin::Username-->

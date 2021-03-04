@@ -17,7 +17,7 @@ use App\Models\PollPost;
 class PollController extends Controller
 {
 
-    function learnerClassPoll(Request $request, Category $class, Poll $poll)
+    function learnerClassPoll($account, Category $class, Poll $poll)
     {
        
 
@@ -29,7 +29,7 @@ class PollController extends Controller
         $data['poll'] = $poll;
         return view('learner.dashboard',  $data );
     } 
-    function learnerSubmitClassPoll(Request $request, Category $class, Poll $poll)
+    function learnerSubmitClassPoll($account, Request $request, Category $class, Poll $poll)
     {
         
         $validated = $request->validate([
@@ -58,7 +58,7 @@ class PollController extends Controller
 
 
 
-    function viewPoll(Category $class, Poll $poll)
+    function viewPoll($account, Category $class, Poll $poll)
     {
         $data['dashboard'] = 'add_course';
         $data['header'] = 'class';
@@ -73,7 +73,7 @@ class PollController extends Controller
         // $data['categories']  = Category::cursor();
         return view('instructor.dashboard',  $data );
     }
-    function newPoll(Category $class)
+    function newPoll($account, Category $class)
     {
         $data['dashboard'] = 'add_course';
         $data['header'] = 'class';
@@ -82,7 +82,7 @@ class PollController extends Controller
         // $data['categories']  = Category::cursor();
         return view('instructor.dashboard',  $data );
     }
-    function processNewPoll(Request $request, Category $class)
+    function processNewPoll(Request $request, $account, Category $class)
     {
         // var_dump($_POST);die();
         $validated = $request->validate([

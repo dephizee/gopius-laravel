@@ -18,13 +18,13 @@ class AuthOrganization
      */
     public function handle(Request $request, Closure $next)
     {
-        // dd(Auth::guard('organization')->user()->approved);
+        // dd(Auth::guard('organization')->user());
         if (!Auth::guard('organization')->check()) {
             
-            return redirect('/');
+            return redirect()->route('login');
         }
         if ( !Auth::guard('organization')->user()->approved) {
-            return redirect('/')->withErrors([
+            return redirect()->route('login')->withErrors([
                     'Account yet to be approved',
                 ]);
         }

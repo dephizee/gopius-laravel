@@ -19,8 +19,9 @@ class AuthOrganizationIsLoggedIn
     public function handle(Request $request, Closure $next)
     {
         // dd(Auth::guard('organization')->check());
+        // Auth::guard('organization')->logout();
         if (Auth::guard('organization')->check() && Auth::guard('organization')->user()->approved) {
-            return redirect('/organization/');
+            return redirect()->route('organization_dashboard');
         }
         return $next($request);
     }

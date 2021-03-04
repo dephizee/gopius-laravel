@@ -20,7 +20,7 @@ class AssignmentController extends Controller
 {
 
 
-    function learnerClassAssignment(Request $request, Category $class, Assignment $assignment)
+    function learnerClassAssignment( $account, Category $class, Assignment $assignment)
     {
         
 
@@ -32,7 +32,7 @@ class AssignmentController extends Controller
         $data['assignment'] = $assignment;
         return view('learner.dashboard',  $data );
     }
-    function learnerSubmitClassAssignment(Request $request, Category $class, Assignment $assignment)
+    function learnerSubmitClassAssignment(Request $request, $account, Category $class, Assignment $assignment)
     {
         
         $validated = $request->validate([
@@ -89,14 +89,14 @@ class AssignmentController extends Controller
 
 
 
-    function instructorAssignments(Request $request)
+    function instructorAssignments()
     {
         $data['view'] = 'assignments';
         $data['header'] = 'course';
         $data['assignment'] = 'active';
         return view('instructor.dashboard',  $data );
     }
-    function viewAllAssignmentSubmissions(Category $class, Assignment $assignment)
+    function viewAllAssignmentSubmissions($account, Category $class, Assignment $assignment)
     {
         if ($assignment->instructor->instr_id != Auth::guard('instructor')->user()->instr_id) {
             return abort(401);
@@ -109,7 +109,7 @@ class AssignmentController extends Controller
         // $data['categories']  = Category::cursor();
         return view('instructor.dashboard',  $data );
     }
-    function viewSubmission(Category $class, Assignment $assignment, AssignmentLearner $assignment_learner)
+    function viewSubmission($account, Category $class, Assignment $assignment, AssignmentLearner $assignment_learner)
     {
         if ($assignment->instructor->instr_id != Auth::guard('instructor')->user()->instr_id) {
             return abort(401);
@@ -124,7 +124,7 @@ class AssignmentController extends Controller
         // $data['categories']  = Category::cursor();
         return view('instructor.dashboard',  $data );
     }
-    function submissionStatus(Category $class, Assignment $assignment, AssignmentLearner $assignment_learner, $status)
+    function submissionStatus($account, Category $class, Assignment $assignment, AssignmentLearner $assignment_learner, $status)
     {
         
         $assignment_learner->status = $status;
@@ -132,7 +132,7 @@ class AssignmentController extends Controller
         return redirect()->back();
     }
 
-    function newAssignment(Category $class)
+    function newAssignment($account, Category $class)
     {
         $data['dashboard'] = 'add_course';
         $data['header'] = 'class';
@@ -141,7 +141,7 @@ class AssignmentController extends Controller
         $data['courses'] = Course::where("cat_no", $class->cat_id)->get();
         return view('instructor.dashboard',  $data );
     }
-    function processNewAssignment(Request $request, Category $class)
+    function processNewAssignment(Request $request, $account, Category $class)
     {
         // var_dump($_POST);die();
         $validated = $request->validate([
@@ -185,7 +185,7 @@ class AssignmentController extends Controller
         }
         return response()->json( $assignments->toArray() )->header('Content-Type', 'application/json');
     }
-    function getAllSubmittedAssignments(Category $class, Assignment $assignment)
+    function getAllSubmittedAssignments($account, Category $class, Assignment $assignment)
     {
         $assignments  = AssignmentLearner::
                         leftJoin('assignments', 'assignment_learners.ass_no', '=', 'assignments.ass_id')
