@@ -20,7 +20,7 @@
 											<div class="card-header py-3">
 												<div class="card-title align-items-start flex-column">
 													<h3 class="card-label font-weight-bolder ">View Courses</h3>
-													<span class="text-muted font-weight-bold font-size-sm mt-1">4 Courses</span>
+													<span class="text-muted font-weight-bold font-size-sm mt-1">{{-- 4 Courses --}}</span>
 												</div>
 												<div class="card-toolbar">
 													<a href="organization/courses-add"><button type="reset" class="btn btn-success mr-2">

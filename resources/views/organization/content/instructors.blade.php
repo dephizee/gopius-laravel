@@ -20,7 +20,7 @@
 											<div class="card-header py-3">
 												<div class="card-title align-items-start flex-column">
 													<h3 class="card-label font-weight-bolder ">View Instructors</h3>
-													<span class="text-muted font-weight-bold font-size-sm mt-1">4 Instructors</span>
+													<span class="text-muted font-weight-bold font-size-sm mt-1">{{-- 4 Instructors --}}</span>
 												</div>
 												<div class="card-toolbar">
 													<a href="{{ route('organization_instuctor_new') }}"><button type="reset" class="btn btn-success mr-2">

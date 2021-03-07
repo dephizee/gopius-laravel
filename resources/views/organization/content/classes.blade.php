@@ -20,7 +20,7 @@
 											<div class="card-header py-3">
 												<div class="card-title align-items-start flex-column">
 													<h3 class="card-label font-weight-bolder ">View classes</h3>
-													<span class="text-muted font-weight-bold font-size-sm mt-1">4 classes</span>
+													<span class="text-muted font-weight-bold font-size-sm mt-1">{{-- 4 classes --}}</span>
 												</div>
 												<div class="card-toolbar">
 													<a href="organization/class-add"><button type="reset" class="btn btn-success mr-2">

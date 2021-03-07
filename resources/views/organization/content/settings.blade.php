@@ -20,7 +20,7 @@
 												<!--begin::User-->
 												<div class="d-flex align-items-center">
 													<div class="image-input image-input-outline symbol " id="kt_user_avatar" style="background-image: url(assets/media/stock-600x400/img-70.jpg); width: 100%;height: 160px;">
-														<div class="image-input-wrapper symbol " style="background-image: url({{ asset('files/'.Auth::guard('organization')->user()->org_avatar_url) }}); width: 100%;height: 160px;"></div>
+														<div class="image-input-wrapper symbol " style="background-image: url({{ asset('storage/'.Auth::guard('organization')->user()->org_avatar_url) }}); width: 100%;height: 160px;"></div>
 														<label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
 															<i class="fa fa-pen icon-sm text-muted"></i>
 															<input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg">
@@ -161,7 +161,7 @@
 															</div>
 															
 															<div class="image-input image-input-outline mr-5" id="kt_long_logo" style="background-image: url(assets/media/logos/primary-logo.png); width: 180px; height: 40px;">
-																<div class="image-input-wrapper" id="kt_user_avatar_logo" style="background-image: url({{ asset('files/'.Auth::guard('organization')->user()->org_long_icon_url) }}); width: 180px; height: 40px;">
+																<div class="image-input-wrapper" id="kt_user_avatar_logo" style="background-image: url({{ asset('storage/'.Auth::guard('organization')->user()->org_long_icon_url) }}); width: 180px; height: 40px;">
 																	
 																</div>
 																<label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
@@ -177,7 +177,7 @@
 																</span>
 															</div><br>
 															<div class="image-input image-input-outline " id="kt_square_logo" style="background-image: url(assets/media/logos/favicon.png); width: 40px; height: 40px;">
-																<div class="image-input-wrapper" style="background-image: url({{ asset('files/'.Auth::guard('organization')->user()->org_square_icon_url) }}); width: 40px; height: 40px;"></div>
+																<div class="image-input-wrapper" style="background-image: url({{ asset('storage/'.Auth::guard('organization')->user()->org_square_icon_url) }}); width: 40px; height: 40px;"></div>
 																<label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow" data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
 																	<i class="fa fa-pen icon-sm text-muted"></i>
 																	<input type="file" name="profile_avatar_icon" accept=".png, .jpg, .jpeg">

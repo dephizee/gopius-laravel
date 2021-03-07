@@ -1,33 +1,5 @@
 
-						<!--begin::Bottom-->
-						<div class="header-bottom">
-							<!--begin::Container-->
-							<div class="container">
-								<!--begin::Header Menu Wrapper-->
-								<div class="header-navs header-navs-left" id="kt_header_navs">
-									<!--begin::Tab Navs(for tablet and mobile modes)-->
-									<ul class="header-tabs p-5 p-lg-0 d-flex d-lg-none nav nav-bold nav-tabs" role="tablist">
-										<!--begin::Item-->
-										<li class="nav-item mr-2">
-											<a href="#" class="nav-link btn btn-clean active" data-toggle="tab" data-target="#kt_header_tab_1" role="tab">Home</a>
-										</li>
-										<!--end::Item-->
-										<!--begin::Item-->
-										<li class="nav-item mr-2">
-											<a href="#" class="nav-link btn btn-clean" data-toggle="tab" data-target="#kt_header_tab_2" role="tab">Reports</a>
-										</li>
-										<!--end::Item-->
-										<!--begin::Item-->
-										<li class="nav-item mr-2">
-											<a href="#" class="nav-link btn btn-clean" data-toggle="tab" data-target="#kt_header_tab_2" role="tab">Orders</a>
-										</li>
-										<!--end::Item-->
-										<!--begin::Item-->
-										<li class="nav-item mr-2">
-											<a href="#" class="nav-link btn btn-clean" data-toggle="tab" data-target="#kt_header_tab_2" role="tab">Help Ceter</a>
-										</li>
-										<!--end::Item-->
-									</ul>
+						
 									<!--begin::Tab Navs-->
 									<!--begin::Tab Content-->
 									<div class="tab-content">

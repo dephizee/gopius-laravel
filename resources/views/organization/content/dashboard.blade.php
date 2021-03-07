@@ -99,7 +99,7 @@
 											<div class="card-header border-0 pt-5">
 												<div class="card-title font-weight-bolder">
 													<div class="card-label">Users
-													<div class="font-size-sm text-muted mt-2">890 Total Users</div></div>
+													<div class="font-size-sm text-muted mt-2">{{-- 890 Total Users --}}</div></div>
 												</div>
 												
 											</div>

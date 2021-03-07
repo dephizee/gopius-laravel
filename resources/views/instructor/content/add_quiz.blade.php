@@ -62,7 +62,7 @@
 
 														<div class="form-group">
 															<label for="exampleSelectd">Duration (mins)</label>
-															<input required type="number" name="duration" min="1" class="form-control form-control-solid" placeholder ="Submission Deadline" />
+															<input required type="number" name="duration" min="1" class="form-control form-control-solid"  />
 														</div>
 
 														

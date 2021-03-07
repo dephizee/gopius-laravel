@@ -60,14 +60,14 @@
 				<!--begin::Header-->
 				<div class="d-flex align-items-center mt-5">
 					<div class="symbol symbol-100 mr-5">
-						<div class="symbol-label" style="background-image:url('assets/media/users/300_21.jpg')"></div>
+						<div class="symbol-label" style="background-image:url({{ asset('storage/'.Auth::guard('organization')->user()->org_avatar_url) }});"></div>
 						<i class="symbol-badge bg-success"></i>
 					</div>
 					<div class="d-flex flex-column">
-						<a href="#" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{Auth::guard('organization')->user()->firstname}} {{Auth::guard('organization')->user()->lastname}}</a>
+						<a href="{{ route('organization_dashboard') }}" class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">{{Auth::guard('organization')->user()->firstname}} {{Auth::guard('organization')->user()->lastname}}</a>
 						{{-- <div class="text-muted mt-1">Application Developer</div> --}}
 						<div class="navi mt-2">
-							<a href="#" class="navi-item">
+							<a class="navi-item">
 								<span class="navi-link p-0 pb-2">
 									<span class="navi-icon mr-1">
 										<span class="svg-icon svg-icon-lg svg-icon-primary">
@@ -99,7 +99,7 @@
 		<!--begin::Header Mobile-->
 		<div id="kt_header_mobile" class="header-mobile bg-primary header-mobile-fixed">
 			<!--begin::Logo-->
-			<a href="index.html">
+			<a href="{{ route('organization_dashboard') }}">
 				<img alt="Logo" src="/assets/media/logos/logo-letter-9.png" class="max-h-30px" />
 			</a>
 			<!--end::Logo-->
@@ -139,7 +139,7 @@
 								<!--begin::Left-->
 								<div class="d-none d-lg-flex align-items-center mr-3">
 									<!--begin::Logo-->
-									<a href="index.html" class="mr-20">
+									<a href="{{ route('organization_dashboard') }}" class="mr-20">
 										<img alt="Logo" src="/assets/media/logos/logo-letter-9.png" class="max-h-35px" />
 									</a>
 									<!--end::Logo-->
@@ -655,6 +655,40 @@
 							</div>
 							<!--end::Container-->
 						</div>
+						<!--begin::Bottom-->
+						<div class="header-bottom">
+							<!--begin::Container-->
+							<div class="container">
+								<!--begin::Header Menu Wrapper-->
+								<div class="header-navs header-navs-left" id="kt_header_navs">
+									<!--begin::Tab Navs(for tablet and mobile modes)-->
+									<ul class="header-tabs p-5 p-lg-0 d-flex d-lg-none nav nav-bold nav-tabs" role="tablist">
+										<!--begin::Item-->
+										<li class="nav-item mr-2">
+											<a href="{{ route('organization_dashboard') }}" class="nav-link btn btn-clean {{$header=='home'?'active':''}}"  role="tab">Home</a>
+										</li>
+										<!--end::Item-->
+										<!--begin::Item-->
+										<li class="nav-item mr-2">
+											<a href="{{ route('organization_appearance') }}" class="nav-link btn btn-clean {{$header=='appearance'?'active':''}}"  role="tab">Appearance</a>
+										</li>
+										<!--end::Item-->
+										<!--begin::Item-->
+										<li class="nav-item mr-2">
+											<a href="{{ route('organization_classes') }}" class="nav-link btn btn-clean {{$header=='class'?'active':''}}"  role="tab">Classes</a>
+										</li>
+										<!--end::Item-->
+										<!--begin::Item-->
+										<li class="nav-item mr-2">
+											<a href="{{ route('organization_instuctors') }}" class="nav-link btn btn-clean {{$header=='instructor'?'active':''}}"  role="tab">Instructors</a>
+										</li>
+										<!--end::Item-->
+										<!--begin::Item-->
+										<li class="nav-item mr-2">
+											<a href="{{ route('organization_learners') }}" class="nav-link btn btn-clean {{$header=='learner'?'active':''}}"  role="tab">Learners</a>
+										</li>
+										<!--end::Item-->
+									</ul>
 						<!--end::Top-->
 						@if (session()->has('message'))
 							<script type="text/javascript">
