@@ -5984,7 +5984,7 @@ a.close.disabled {
   vertical-align: text-top !important; }
 
 .bg-primary {
-  background-color: #24B0B2 !important; }
+  background-color: transparent !important; }
 
 a.bg-primary:hover, a.bg-primary:focus,
 button.bg-primary:hover,
@@ -60460,7 +60460,9 @@ body {
       -webkit-box-align: stretch;
       -ms-flex-align: stretch;
       align-items: stretch;
-      background-color: #24B0B2; }
+      /*background-color: #24B0B2; */
+      background: linear-gradient(#0c7e80, #24B0B2);
+    }
       .header .header-top .container,
       .header .header-top .container-fluid,
       .header .header-top .container-sm,
@@ -60537,7 +60539,8 @@ body {
     height: 55px;
     min-height: 55px;
     position: relative;
-    background-color: #24B0B2;
+    /*background-color: #24B0B2;*/
+    background: linear-gradient( #0c7e80, #24B0B2);
     z-index: 3; }
     .header-mobile-fixed .header-mobile {
       position: fixed;

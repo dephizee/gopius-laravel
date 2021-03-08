@@ -55,7 +55,11 @@
 		<!--end::Global Theme Styles-->
 		<!--begin::Layout Themes(used by all pages)-->
 		<!--end::Layout Themes-->
-		<link rel="shortcut icon" href="/assets/media/logos/favicon.png" />
+		@if (Auth::guard('learner')->user()->organization->org_square_icon_url !== null)
+			<link rel="shortcut icon" href="{{ asset('storage/'.Auth::guard('learner')->user()->organization->org_square_icon_url) }}" />
+		@else
+			<link rel="shortcut icon" href="/assets/media/logos/favicon.png" />
+		@endif
 	</head>
 	<!--end::Head-->
 	<!--begin::Body-->
@@ -157,7 +161,12 @@
 								<div class="d-none d-lg-flex align-items-center mr-3">
 									<!--begin::Logo-->
 									<a href="{{ route('learner_dashboard') }}" class="mr-20">
-										<img alt="Logo" src="/assets/media/logos/logo-letter-9.png" class="max-h-35px" />
+										@if ( Auth::guard('learner')->user()->organization->org_long_icon_url !== null)
+											<img alt="Logo" src="{{ asset('storage/'.Auth::guard('learner')->user()->organization->org_long_icon_url) }}" class="max-h-35px" />
+											
+										@else
+											<img alt="Logo" src="/assets/media/logos/logo-letter-9.png" class="max-h-35px" />
+										@endif
 									</a>
 									<!--end::Logo-->
 									<!--begin::Tab Navs(for desktop mode)-->

@@ -19,7 +19,43 @@
 		<!--end::Global Theme Styles-->
 		<!--begin::Layout Themes(used by all pages)-->
 		<!--end::Layout Themes-->
-		<link rel="shortcut icon" href="assets/media/logos/favicon.png" />
+		
+		@if ($setting->organization->org_square_icon_url !== null)
+			<link rel="shortcut icon" href="{{ asset('storage/'.$setting->organization->org_square_icon_url) }}" />
+		@else
+			<link rel="shortcut icon" href="/assets/media/logos/favicon.png" />
+		@endif
+		<style type="text/css">
+			.header .header-top,
+			.header-mobile
+			 {
+				background: {{$setting->organization->setting->color}}!important;
+			}
+			.header-menu .menu-nav > .menu-item.menu-item-active > .menu-link .menu-text
+			 {
+				color: {{$setting->organization->setting->color}}!important;
+			}
+			.btn.btn-primary,
+			.btn.btn-success,
+			.datatable.datatable-default > .datatable-pager > .datatable-pager-nav > li > .datatable-pager-link.datatable-pager-link-active
+			 {
+			    background-color: {{$setting->organization->setting->color}}!important;
+			    border-color: {{$setting->organization->setting->color}}!important;
+			}
+			.text-primary, .text-success, .datatable.datatable-default > .datatable-table > .datatable-body .datatable-toggle-detail i {
+			    color: {{$setting->organization->setting->color}}!important;
+			}
+			.wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step[data-wizard-state="current"] .wizard-label .wizard-title {
+			    color: {{$setting->organization->setting->color}}!important;
+			}
+			.wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step[data-wizard-state="current"] .wizard-label .wizard-icon {
+			    color: {{$setting->organization->setting->color}}!important;
+			}
+			.wizard.wizard-1 .wizard-nav .wizard-steps .wizard-step[data-wizard-state="current"] .wizard-arrow svg g [fill] {
+			    fill: {{$setting->organization->setting->color}}!important;
+			}
+			{{$setting->organization->setting->css}}
+		</style>
 	</head>
 	<!--end::Head-->
 	<!--begin::Body-->
@@ -33,8 +69,13 @@
 					<!--begin: Aside Container-->
 					<div class="d-flex flex-column-fluid flex-column justify-content-between py-9 px-7 py-lg-13 px-lg-35">
 						<!--begin::Logo-->
-						<a href="#" class="text-center pt-2">
-							<img src="assets/media/logos/primary-logo.png" class="max-h-75px" alt="" />
+						<a class="text-center pt-2">
+							@if ( $setting->organization->org_long_icon_url !== null)
+								<img src="{{ asset('storage/'.$setting->organization->org_long_icon_url) }}" class="max-h-75px" alt="" />
+							@else
+								<img src="assets/media/logos/primary-logo.png" class="max-h-75px" alt="" />
+							@endif
+							
 						</a>
 						<!--end::Logo-->
 						<!--begin::Aside body-->
