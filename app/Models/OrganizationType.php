@@ -9,4 +9,13 @@ class OrganizationType extends Model
 {
     use HasFactory;
     protected $primaryKey = "org_type_id";
+
+    /**
+     * Fields that can be mass assigned.
+     *
+     * @var array
+     */
+    protected $fillable = [
+    	'org_type_name'
+    ];
 }
