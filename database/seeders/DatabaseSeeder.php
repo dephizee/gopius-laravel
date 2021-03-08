@@ -16,12 +16,12 @@ class DatabaseSeeder extends Seeder
     {
     	// \App\Models\OrganizationType::factory(5)->create();
         $org_type_names = [
-            ['title'=>'Pri./Sec. School'],
-            ['title'=>'Higher Institution'],
-            ['title'=>'Corporate'],
-            ['title'=>'Government Institution'],
-            ['title'=>'Start-up'],
-            ['title'=>'Others'],
+            ['org_type_name'=>'Pri./Sec. School'],
+            ['org_type_name'=>'Higher Institution'],
+            ['org_type_name'=>'Corporate'],
+            ['org_type_name'=>'Government Institution'],
+            ['org_type_name'=>'Start-up'],
+            ['org_type_name'=>'Others'],
         ];
         foreach ($org_type_names as $key => $org_type_name) {
             OrganizationType::create($org_type_name);
