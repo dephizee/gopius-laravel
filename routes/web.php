@@ -257,7 +257,7 @@ Route::group(['domain'=>'{account}.'.$domain,'middleware'=>['auth_domain']], fun
 });
 
 Route::get('/', function (){
-	return view('nav');
+	return redirect()->route('login');
 });
 
 
